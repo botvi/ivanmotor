@@ -21,7 +21,7 @@ use App\Http\Controllers\{
 |
 */
 
-Route::get('/home', [homeController::class, 'index'])->name('home');
+Route::get('/', [homeController::class, 'index'])->name('home');
 
 
 Route::group([
