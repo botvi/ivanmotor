@@ -6,7 +6,7 @@
                     <label>Navigation</label>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="/pasien">
+                    <a class="nav-link " href="/">
                         <i class="fa fa-dashboard"></i>
                         <span class="pcoded-mtext">Dashboard</span>
                     </a>
