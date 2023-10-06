@@ -22,6 +22,9 @@
                         <div class="row mb-4">
                             <div class="col-md-12 p-2">
                                 {{-- <img alt="" src="{{ asset('bg.jpg') }}" style="width: 100%;height: 400px"> --}}
+
+                                Total Jumlah Terjual: {{ $totalJumlahBeli }} ||  Total Keuntungan: {{ $totalKeuntungan }}
+
                             </div>
                         </div>
 

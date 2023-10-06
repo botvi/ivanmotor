@@ -24,6 +24,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link " href="/penjualan">
+                        <i class="fa fa-folder"></i>
+                        <span class="pcoded-mtext">Data Penjualan</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link " href="/pemesanan">
                         <i class="fa fa-folder"></i>
                         <span class="pcoded-mtext">Pemesanan</span>

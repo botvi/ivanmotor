@@ -5,18 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pemasok extends Model
+class Data_penjualan extends Model
 {
     use HasFactory;
-    protected $table = 'pemasok';
+    protected $table = 'data_penjualan';
 
     protected $fillable = [
-        'nama_pemasok',
         'produk_suplai',
-        'harga_produk',
-        'alamat',
-        'telepon',
-        'keterangan',
+        'jumlah',
+        'harga_total',
 
     ];
+
+
+
+    public function stokbarang()
+{
+    return $this->belongsTo('App\StokBarang');
+}
 }

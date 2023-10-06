@@ -5,8 +5,8 @@
             <div class="row align-items-center">
                 <div class="col-md-12">
                     <div class="flex justify-between">
-                        <h1 class="text-white text-bold" style="font-size: 1.5em">Data Stok</h1>
-            
+                        <h1 class="text-white text-bold" style="font-size: 1.5em">Data Penjualan</h1>
+    
                     </div>
                 </div>
             </div>
@@ -19,8 +19,27 @@
             <div class="card">
                 <div class="card-body">
                     <div class="w-full pb-10 pt-2">
-                        <button class="btn btn-outline-dark" data-target=".modal-form" data-toggle="modal" type="button">
-                            <i class="fa fa-save"></i> Tambah Data</button>
+                        <table class="display responsive nowrap" id="tables" style="width:100%">
+                            <thead class="bg-gray-100 text-gray-500 shadow-md">
+                                <tr>
+                                    <th class="w-[25px]">No</th>
+                                    <th>Nama Barang</th>
+                                    <th>Jumlah</th>
+                                    <th>Harga total</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+
+                            <tfoot class="bg-gray-100 text-gray-500 shadow-md">
+                                <tr>
+                                    <th class="w-[25px]">No</th>
+                                    <th>Nama Barang</th>
+                                    <th>Jumlah</th>
+                                    <th>Harga total</th>
+                                    <th>#</th>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -28,64 +47,7 @@
     </div>
     {{--  --}}
 @endsection
-@section('modal')
-    <div aria-hidden="true" aria-labelledby="myLargeModalLabel" class="modal fade modal-form" role="dialog"
-        style="display: none;" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title h4" id="myLargeModalLabel">Form Input Data</h5>
-                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="/pemesanan" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="form-entry"
-                        method="POST">
-                        @csrf
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="pemasok">Barang:</label>
-                                    <select class="form-control w-full" id="produk_suplai" name="produk_suplai">
-                                        <option value="">-- Pilih Barang --</option>
-                                        @foreach ($stokbarang as $stokbarang)
-                                            <option value="{{ $stokbarang->id }}" data-harga="{{ $stokbarang->harga_satuan }}">{{ $stokbarang->produk_suplai }} || STOK
-                                                ({{ $stokbarang->jumlah_stok }})
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                          
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="jumlah">Jumlah:</label>
-                                    <input class="form-control" id="jumlah" name="jumlah" type="text">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="harga_total">Harga total:</label>
-                                    <input class="form-control" id="harga_total" name="harga_total" type="text" readonly>
-                                </div>
-                            </div>
-                          
-                            
-                        </div>
 
-                        <div class="flex justify-end" style="width: 100%">
-                            <button class="btn btn-primary bg-green-500 w-[200px]" type="submit">Submit</button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
 
 @section('style')
     <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -169,14 +131,7 @@
             destory(url);
         });
     </script>
-    <script>
-        document.getElementById('jumlah').addEventListener('input', function() {
-            var jumlah = parseInt(this.value);
-            var harga_satuan = parseFloat(document.getElementById('produk_suplai').options[document.getElementById('produk_suplai').selectedIndex].getAttribute('data-harga'));
-            var harga_total = jumlah * harga_satuan;
-            document.getElementById('harga_total').value = harga_total;
-        });
-    </script>
+
 
     
     

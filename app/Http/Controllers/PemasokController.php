@@ -33,9 +33,9 @@ class PemasokController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'kode_pemasok' => 'required|string',
                 'nama_pemasok' => 'required|string',
                 'produk_suplai' => 'required|string',
+                'harga_produk' => 'required|string',
                 'alamat' => 'required|string',
                 'telepon' => 'required|string',
                 'keterangan' => 'required|string',
@@ -54,7 +54,7 @@ class PemasokController extends Controller
             \DB::transaction(function () use ($request, $validator) {
 
 
-                $pemasokData = $request->except(['kode_pemasok','nama_pemasok', 'produk_suplai', 'alamat','telepon','keterangan','created_at','updated_at']);
+                $pemasokData = $request->except(['nama_pemasok', 'produk_suplai', 'harga_produk', 'alamat','telepon','keterangan','created_at','updated_at']);
                 $pemasokData += $validator->validated();
                 $pemasok = Pemasok::create($pemasokData);
                 if (!$pemasok) {
@@ -74,8 +74,7 @@ class PemasokController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'kode_pemasok' => 'required|string',
-                'nama_pemasok' => 'required|string',
+                'harga_produk' => 'required|string',
                 'produk_suplai' => 'required|string',
                 'alamat' => 'required|string',
                 'telepon' => 'required|string',
@@ -97,9 +96,9 @@ class PemasokController extends Controller
 
             // Update data operator
             $pasien->update($request->only([
-                'kode_pemasok',
                 'nama_pemasok',
                 'produk_suplai',
+                'harga_produk',
                 'alamat',
                 'telepon',
                 'keterangan',

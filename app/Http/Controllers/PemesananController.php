@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pemesanan;
+use App\Models\Data_penjualan;
 use App\Models\StokBarang;
 use Illuminate\Http\Request;
 use App\Service\DataTableFormat;
@@ -15,11 +15,17 @@ class PemesananController extends Controller
 
         return view('Page.Pemesanan.show', compact('stokbarang'));
     }
+    public function data_penjualan()
+    {
+        $stokbarang = StokBarang::all();
+
+        return view('Page.Data_penjualan.show', compact('stokbarang'));
+    }
 
     public function show_data()
     {
         return DataTableFormat::Call()->query(function () {
-            return Pemesanan::query();
+            return Data_penjualan::query();
         })
             ->formatRecords(function ($result, $start) {
                 return $result->map(function ($item, $index) use ($start) {
@@ -54,7 +60,7 @@ class PemesananController extends Controller
     {
         $stok =  StokBarang::find($request->produk_suplai);
     
-        $pemesanan = new Pemesanan;
+        $pemesanan = new Data_penjualan;
         $pemesanan->produk_suplai = $stok->produk_suplai;
         $pemesanan->jumlah = $request->input('jumlah');
         $pemesanan->harga_total = $request->input('harga_total');
@@ -71,7 +77,9 @@ class PemesananController extends Controller
             return redirect()->back();
         } else {
             Alert::error('Validation Error', 'Stok Tidak Mencukupi !');
-            return redirect()->back();
+            // return redirect()->back();
+            return view('penjualan');
+
         }
     }
 
@@ -90,7 +98,7 @@ class PemesananController extends Controller
 
     public function destroy($id)
 {
-    $pemesanan = Pemesanan::findOrFail($id);
+    $pemesanan = Data_penjualan::findOrFail($id);
     $stokbarang = StokBarang::where('produk_suplai', $pemesanan->produk_suplai)->first();
 
     // Tambahkan jumlah stok

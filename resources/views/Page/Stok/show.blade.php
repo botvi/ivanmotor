@@ -72,7 +72,7 @@
                                         <option value="">-- Pilih Barang --</option>
                                         @foreach ($pemasok as $pemasok)
                                             <option value="{{ $pemasok->produk_suplai }}">{{ $pemasok->produk_suplai }}
-                                                ({{ $pemasok->kode_pemasok }})
+                                                ({{ $pemasok->harga_produk }})
                                             </option>
                                         @endforeach
                                     </select>
@@ -89,7 +89,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="harga_satuan">Harga Satuan:</label>
+                                    <label for="harga_satuan">Harga Jual:</label>
                                     <input class="form-control" id="harga_satuan" name="harga_satuan" type="text">
                                 </div>
                             </div>

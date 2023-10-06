@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('pemasok', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_pemasok');
             $table->string('nama_pemasok');
             $table->string('produk_suplai');
+            $table->string('harga_produk');
             $table->string('alamat');
             $table->string('telepon');
             $table->string('keterangan');

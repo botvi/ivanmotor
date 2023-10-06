@@ -24,9 +24,9 @@
                             <thead class="bg-gray-100 text-gray-500 shadow-md">
                                 <tr>
                                     <th class="w-[25px]">No</th>
-                                    <th>Kode Pemasok</th>
                                     <th>Nama Pemasok</th>
                                     <th>Produk Suplai</th>
+                                    <th>Harga Produk/Produk</th>
                                     <th>Alamat Pemasok</th>
                                     <th>Telepon Pemasok</th>
                                     <th>Keterangan</th>
@@ -36,9 +36,9 @@
                             <tfoot class="bg-gray-100 text-gray-500 shadow-md">
                                 <tr>
                                     <th class="w-[25px]">No</th>
-                                    <th>Kode Pemasok</th>
                                     <th>Nama Pemasok</th>
                                     <th>Produk Suplai</th>
+                                    <th>Harga Produk/Produk</th>
                                     <th>Alamat Pemasok</th>
                                     <th>Telepon Pemasok</th>
                                     <th>Keterangan</th>
@@ -67,15 +67,7 @@
                     <form action="/pemasok" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="form-entry"
                         method="POST">
                         @csrf
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="kode_pemasok">Kode Pemasok:</label>
-                                    <input class="form-control" id="kode_pemasok" name="kode_pemasok" type="text">
-                                </div>
-                            </div>
-                    
-                        </div>
+                       
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -110,6 +102,12 @@
                                 <div class="form-group">
                                     <label for="keterangan">Keterangan:</label>
                                     <input class="form-control" id="keterangan" name="keterangan" type="text">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="harga_produk">Harga Produk/Produk:</label>
+                                    <input class="form-control" id="harga_produk" name="harga_produk" type="text">
                                 </div>
                             </div>
                           
@@ -177,14 +175,15 @@
             stripeClasses: [],
             columns: [{
                     data: 'no'
-                }, {
-                    data: "kode_pemasok",
-                },
+                }, 
                 {
                     data: "nama_pemasok",
                 },
                 {
                     data: "produk_suplai"
+                },
+                {
+                    data: "harga_produk"
                 },
                 {
                     data: "alamat"
@@ -219,9 +218,9 @@
                     const selectedData = parsedObject.find(item => item.id === id);
 
                     if (selectedData) {
-                        $('#kode_pemasok').val(selectedData.kode_pemasok);
                         $('#nama_pemasok').val(selectedData.nama_pemasok);
                         $('#produk_suplai').val(selectedData.produk_suplai);
+                        $('#harga_produk').val(selectedData.harga_produk);
                         $('#alamat').val(selectedData.alamat);
                         $('#telepon').val(selectedData.telepon);
                         $('#keterangan').val(selectedData.keterangan);

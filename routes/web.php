@@ -53,3 +53,11 @@ Route::group([
     Route::post('/', [PemesananController::class, 'store']);
     Route::get('/destroy/{id}', [PemesananController::class, 'destroy']);
 });
+Route::group([
+    'middleware' =>  ["web"],
+    'prefix' => "penjualan"
+], function ($router) {
+    Route::get('/', [PemesananController::class, 'data_penjualan']);
+    Route::get('/show-data', [PemesananController::class, 'show_data']);
+
+});
