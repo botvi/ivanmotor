@@ -25,11 +25,10 @@
                                 <tr>
                                     <th class="w-[25px]">No</th>
                                     <th>Nama Pemasok</th>
-                                    <th>Produk Suplai</th>
-                                    <th>Harga Produk/Produk</th>
+                        
                                     <th>Alamat Pemasok</th>
                                     <th>Telepon Pemasok</th>
-                                    <th>Keterangan</th>
+                                    <th>Deskripsi</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -37,11 +36,10 @@
                                 <tr>
                                     <th class="w-[25px]">No</th>
                                     <th>Nama Pemasok</th>
-                                    <th>Produk Suplai</th>
-                                    <th>Harga Produk/Produk</th>
+                              
                                     <th>Alamat Pemasok</th>
                                     <th>Telepon Pemasok</th>
-                                    <th>Keterangan</th>
+                                    <th>Deskripsi</th>
                                     <th>#</th>
                                 </tr>
                             </tfoot>
@@ -77,42 +75,29 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="produk_suplai">Produk Suplai:</label>
-                                    <input class="form-control" id="produk_suplai" name="produk_suplai" type="text">
-                                </div>
-                            </div>
-                          
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
                                     <label for="alamat">Alamat Pemasok:</label>
                                     <input class="form-control" id="alamat" name="alamat" type="text">
                                 </div>
                             </div>
+                         
+                          
+                        </div>
+                        <div class="row">
+                           
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="telepon">Telepon Pemasok:</label>
                                     <input class="form-control" id="telepon" name="telepon" type="text">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="keterangan">Keterangan:</label>
-                                    <input class="form-control" id="keterangan" name="keterangan" type="text">
+                                    <label for="desksripsi">Desksripsi:</label>
+                                    <input class="form-control" id="desksripsi" name="desksripsi" type="text">
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="harga_produk">Harga Produk/Produk:</label>
-                                    <input class="form-control" id="harga_produk" name="harga_produk" type="text">
-                                </div>
-                            </div>
-                          
                         </div>
-
+          
 
 
                             <div class="flex justify-end" style="width: 100%">
@@ -180,19 +165,13 @@
                     data: "nama_pemasok",
                 },
                 {
-                    data: "produk_suplai"
-                },
-                {
-                    data: "harga_produk"
-                },
-                {
                     data: "alamat"
                 },
                 {
                     data: "telepon"
                 },
                 {
-                    data: "keterangan"
+                    data: "desksripsi"
                 },
 
 
@@ -219,11 +198,10 @@
 
                     if (selectedData) {
                         $('#nama_pemasok').val(selectedData.nama_pemasok);
-                        $('#produk_suplai').val(selectedData.produk_suplai);
-                        $('#harga_produk').val(selectedData.harga_produk);
+                   
                         $('#alamat').val(selectedData.alamat);
                         $('#telepon').val(selectedData.telepon);
-                        $('#keterangan').val(selectedData.keterangan);
+                        $('#desksripsi').val(selectedData.desksripsi);
 
                         //untuk pasword tidak di edit disini
                         $("#form-entry").attr("action", "/pemasok/update/" + id);

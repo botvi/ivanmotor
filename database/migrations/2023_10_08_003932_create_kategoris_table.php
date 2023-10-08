@@ -9,18 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      *
-      * @return void
+     * @return void
      */
     public function up()
     {
-        Schema::create('stok', function (Blueprint $table) {
+        Schema::create('kategori', function (Blueprint $table) {
             $table->id();
-            $table->string('produk_suplai');
-            $table->integer('jumlah_stok');
-            $table->integer('harga_satuan');
+            $table->string('kategori');
             $table->timestamps();
-            
-
         });
     }
 
@@ -31,7 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stok');
+        Schema::dropIfExists('kategori');
     }
 };
-

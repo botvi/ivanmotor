@@ -6,8 +6,7 @@
                 <div class="col-md-12">
                     <div class="flex justify-between">
                         <h1 class="text-white text-bold" style="font-size: 1.5em">Data Stok</h1>
-                        <button class="btn btn-outline-light" data-target=".modal-form" data-toggle="modal" type="button">
-                            <i class="fa fa-save"></i> Tambah Data</button>
+                      
                     </div>
                 </div>
             </div>
@@ -25,8 +24,7 @@
                                 <tr>
                                     <th class="w-[25px]">No</th>
                                     <th>Nama Barang</th>
-                                    <th>Jumlah stok</th>
-                                    <th>Harga satuan</th>
+                                    <th>Stok Barang</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -35,8 +33,7 @@
                                 <tr>
                                     <th class="w-[25px]">No</th>
                                     <th>Nama Barang</th>
-                                    <th>Jumlah stok</th>
-                                    <th>Harga satuan</th>
+                                    <th>Stok Barang</th>
                                     <th>#</th>
                                 </tr>
                             </tfoot>
@@ -63,34 +60,12 @@
                     <form action="/stok" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="form-entry"
                         method="POST">
                         @csrf
-                        <div class="row">
-                            
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="pemasok">Barang:</label>
-                                    <select class="form-control w-full" id="produk_suplai" name="produk_suplai">
-                                        <option value="">-- Pilih Barang --</option>
-                                        @foreach ($pemasok as $pemasok)
-                                            <option value="{{ $pemasok->produk_suplai }}">{{ $pemasok->produk_suplai }}
-                                                ({{ $pemasok->harga_produk }})
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            
-                        </div>
+
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="jumlah_stok">Jumlah Stok:</label>
-                                    <input class="form-control" id="jumlah_stok" name="jumlah_stok" type="text">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="harga_satuan">Harga Jual:</label>
-                                    <input class="form-control" id="harga_satuan" name="harga_satuan" type="text">
+                                    <label for="stok_barang">Jumlah Stok:</label>
+                                    <input class="form-control" id="stok_barang" name="stok_barang" type="number">
                                 </div>
                             </div>
                           
@@ -161,22 +136,18 @@
                 },
         
                 {
-                    data: "produk_suplai"
+                    data: "nama_barang"
                 },
                 {
-                    data: "jumlah_stok"
+                    data: "stok_barang"
                 },
-                {
-                    data: "harga_satuan"
-                },
-
+               
                 {
                     data: null,
                     render: function(data, type, row) {
                         console.log(row);
                         return `<div class="flex justify-between">
                                     <button data-target=".modal-form" data-toggle="modal" class="btn btn-success btn-sm mr-1 w-[50px] data-update" data-id="${row?.id}"><i class="fa fa-edit"></i></button> 
-                                    <button  class="btn btn-danger btn-sm ml-1 w-[50px] data-destroy" data-id="${row?.id}"><i class="fa fa-trash"></i></button> 
                                 </div>`;
                     }
                 }
@@ -192,9 +163,7 @@
                     const selectedData = parsedObject.find(item => item.id === id);
 
                     if (selectedData) {
-                        $('#produk_suplai').val(selectedData.produk_suplai);
-                        $('#jumlah_stok').val(selectedData.jumlah_stok);
-                        $('#harga_satuan').val(selectedData.harga_satuan);
+                        $('#stok_barang').val(selectedData.stok_barang);
 
                         //untuk pasword tidak di edit disini
                         $("#form-entry").attr("action", "/stok/update/" + id);
@@ -208,10 +177,6 @@
                 toastr.info('aksi gagal?')
             }
         })
-        $(document).on("click", ".data-destroy", function() {
-            const id = $(this).data("id");
-            const url = "/stok/destroy/" + id;
-            destory(url);
-        });
+      
     </script>
 @endsection

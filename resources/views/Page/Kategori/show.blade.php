@@ -5,8 +5,9 @@
             <div class="row align-items-center">
                 <div class="col-md-12">
                     <div class="flex justify-between">
-                        <h1 class="text-white text-bold" style="font-size: 1.5em">Pemesanan</h1>
-            
+                        <h1 class="text-white text-bold" style="font-size: 1.5em">Kategori</h1>
+                        <button class="btn btn-outline-light" data-target=".modal-form" data-toggle="modal" type="button">
+                            <i class="fa fa-save"></i> Tambah Data</button>
                     </div>
                 </div>
             </div>
@@ -19,37 +20,18 @@
             <div class="card">
                 <div class="card-body">
                     <div class="w-full pb-10 pt-2">
-                        <button class="btn btn-outline-dark" data-target=".modal-form" data-toggle="modal" type="button">
-                            <i class="fa fa-plus"></i>PESAN BARANG</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="w-full pb-10 pt-2">
                         <table class="display responsive nowrap" id="tables" style="width:100%">
                             <thead class="bg-gray-100 text-gray-500 shadow-md">
                                 <tr>
                                     <th class="w-[25px]">No</th>
-                                    <th>Nama Barang</th>
-                                    <th>Nama Pelanggan</th>
-                                    <th>Jumlah Beli</th> 
-                                    <th>Total Bayar</th> 
+                                    <th>Kategori</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
-
                             <tfoot class="bg-gray-100 text-gray-500 shadow-md">
                                 <tr>
                                     <th class="w-[25px]">No</th>
-                                    <th>Nama Barang</th>
-                                    <th>Nama Pelanggan</th>
-                                    <th>Jumlah Beli</th> 
-                                    <th>Total Bayar</th> 
+                                    <th>Kategori</th>
                                     <th>#</th>
                                 </tr>
                             </tfoot>
@@ -59,7 +41,6 @@
             </div>
         </div>
     </div>
-    {{--  --}}
 @endsection
 @section('modal')
     <div aria-hidden="true" aria-labelledby="myLargeModalLabel" class="modal fade modal-form" role="dialog"
@@ -73,59 +54,24 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="/pemesanan" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="form-entry"
+                    <form action="/kategori" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="form-entry"
                         method="POST">
                         @csrf
+                       
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="barang_id">Barang:</label>
-                                    <select class="form-control w-full" id="barang_id" name="barang_id">
-                                        <option value="">-- Pilih Barang --</option>
-                                        @foreach ($barang as $barang)
-                                        <option value="{{ $barang->id }}" data-harga="{{ $barang->harga_beli }}">
-                                            {{ $barang->nama_barang }} || 
-                                            <span class="badge badge-primary">STOK ({{ $barang->stok_barang }})</span>
-                                        </option>
-                                    @endforeach
-                                    
-                                    </select>
+                                    <label for="kategori">Nama Kategori:</label>
+                                    <input class="form-control" id="kategori" name="kategori" type="text">
                                 </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="pelanggan_id">Pelanggan:</label>
-                                    <select class="form-control w-full" id="pelanggan_id" name="pelanggan_id">
-                                        <option value="">-- Pilih Pelanggan --</option>
-                                        @foreach ($pelanggan as $pelanggan)
-                                            <option value="{{ $pelanggan->id }}" >{{ $pelanggan->nama_pelanggan }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                          
+                            </div>  
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="jumlah">Jumlah:</label>
-                                    <input class="form-control" id="jumlah" name="jumlah" type="text">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="harga_total">Harga total:</label>
-                                    <input class="form-control" id="harga_total" name="harga_total" type="text" readonly>
-                                </div>
-                            </div>
-                          
-                            
-                        </div>
+                       
 
-                        <div class="flex justify-end" style="width: 100%">
-                            <button class="btn btn-primary bg-green-500 w-[200px]" type="submit">Submit</button>
-                        </div>
+
+                            <div class="flex justify-end" style="width: 100%">
+                                <button class="btn btn-primary bg-green-500 w-[200px]" type="submit">Submit</button>
+                            </div>
 
                     </form>
                 </div>
@@ -150,7 +96,6 @@
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
     <script>
         function safeJsonStringify(obj) {
             try {
@@ -160,7 +105,7 @@
                 return '{}'; // Mengembalikan objek kosong jika parsing gagal
             }
         }
-        const URI = "/pemesanan/show-data";
+        const URI = "/kategori/show-data";
         const tables = new DataTable("#tables", {
             processing: true,
             serverSide: true,
@@ -184,27 +129,18 @@
             stripeClasses: [],
             columns: [{
                     data: 'no'
-                },
-        
+                }, 
                 {
-                    data: "barang.nama_barang"
+                    data: "kategori",
                 },
-                {
-                    data: "pelanggan.nama_pelanggan"
-                },
-                {
-                    data: "jumlah"
-                },
-                {
-                    data: "harga_total"
-                },
+
 
                 {
                     data: null,
                     render: function(data, type, row) {
                         console.log(row);
                         return `<div class="flex justify-between">
-                                   
+                                    <button data-target=".modal-form" data-toggle="modal" class="btn btn-success btn-sm mr-1 w-[50px] data-update" data-id="${row?.id}"><i class="fa fa-edit"></i></button> 
                                     <button  class="btn btn-danger btn-sm ml-1 w-[50px] data-destroy" data-id="${row?.id}"><i class="fa fa-trash"></i></button> 
                                 </div>`;
                     }
@@ -212,23 +148,35 @@
             ],
         });
 
-     
+        $(document).on("click", ".data-update", function() {
+            try {
+                const id = $(this).data("id");
+                const InMemory = localStorage.getItem('data');
+                if (InMemory) {
+                    const parsedObject = JSON.parse(InMemory);
+                    const selectedData = parsedObject.find(item => item.id === id);
+
+                    if (selectedData) {
+                        $('#kategori').val(selectedData.kategori);
+                   
+            
+
+                        //untuk pasword tidak di edit disini
+                        $("#form-entry").attr("action", "/kategori/update/" + id);
+                    } else {
+                        toastr.info('Data dengan ID tersebut tidak ditemukan.');
+                    }
+                } else {
+                    toastr.info('Data tidak tersedia di dalam memori.');
+                }
+            } catch (error) {
+                toastr.info('aksi gagal?')
+            }
+        })
         $(document).on("click", ".data-destroy", function() {
             const id = $(this).data("id");
-            const url = "/pemesanan/destroy/" + id;
+            const url = "/kategori/destroy/" + id;
             destory(url);
         });
     </script>
- <script>
-    document.getElementById('jumlah').addEventListener('input', function() {
-        var jumlah = parseInt(this.value);
-        var harga_satuan = parseFloat(document.getElementById('barang_id').options[document.getElementById('barang_id').selectedIndex].getAttribute('data-harga'));
-        var harga_total = jumlah * harga_satuan;
-        document.getElementById('harga_total').value = harga_total;
-    });
-</script>
-
-
-    
-    
 @endsection

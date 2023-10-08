@@ -5,16 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pemasok extends Model
+class Kategori extends Model
 {
     use HasFactory;
-    protected $table = 'pemasok';
+    protected $table = 'kategori';
 
     protected $fillable = [
-        'nama_pemasok',
-        'alamat',
-        'telepon',
-        'desksripsi',
+        'kategori',
+ 
 
     ];
+    public function pemasok()
+    {
+        return $this->belongsTo(Pemasok::class);
+    }
 }

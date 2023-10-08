@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use Alert;
-use App\Models\Pemasok;
+use App\Models\Pelanggan;
 use App\Service\DataTableFormat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class PemasokController extends Controller
+class PelangganController extends Controller
 {
     public function show()
     {
-        return view("Page.Pemasok.show");
+        return view("Page.Pelanggan.show");
     }
     public function show_data()
     {
         return DataTableFormat::Call()->query(function () {
-            return Pemasok::query();
+            return Pelanggan::query();
         })
             ->formatRecords(function ($result, $start) {
                 return $result->map(function ($item, $index) use ($start) {
@@ -33,10 +33,9 @@ class PemasokController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'nama_pemasok' => 'required|string',
+                'nama_pelanggan' => 'required|string',
                 'alamat' => 'required|string',
                 'telepon' => 'required|string',
-                'desksripsi' => 'required|string',
     
             ]);
             if ($validator->fails()) {
@@ -52,10 +51,10 @@ class PemasokController extends Controller
             \DB::transaction(function () use ($request, $validator) {
 
 
-                $pemasokData = $request->except(['nama_pemasok', 'alamat','telepon','desksripsi','created_at','updated_at']);
-                $pemasokData += $validator->validated();
-                $pemasok = Pemasok::create($pemasokData);
-                if (!$pemasok) {
+                $pelangganData = $request->except(['nama_pelanggan', 'alamat','telepon','created_at','updated_at']);
+                $pelangganData += $validator->validated();
+                $pelanggan = Pelanggan::create($pelangganData);
+                if (!$pelanggan) {
                     Alert::error('Validation Error', 'gagal menyimpan data');
                     return redirect()->back();
                 }
@@ -72,10 +71,9 @@ class PemasokController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'nama_pemasok' => 'required|string',
+                'nama_pelanggan' => 'required|string',
                 'alamat' => 'required|string',
                 'telepon' => 'required|string',
-                'desksripsi' => 'required|string',
     
             ]);
             if ($validator->fails()) {
@@ -89,14 +87,13 @@ class PemasokController extends Controller
             }
 
             // Cari operator berdasarkan operator_id
-            $pasien = Pemasok::findOrFail($id);
+            $pasien = Pelanggan::findOrFail($id);
 
             // Update data operator
             $pasien->update($request->only([
-                'nama_pemasok',
+                'nama_pelanggan',
                 'alamat',
                 'telepon',
-                'desksripsi',
             ]));
 
 
@@ -112,7 +109,7 @@ class PemasokController extends Controller
     public function destroy($id)
     {
         try {
-            $op = Pemasok::find($id);
+            $op = Pelanggan::find($id);
             $op->delete();
             Alert::success('Success', 'Data berhasil dihapus');
             return redirect()->back();

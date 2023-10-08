@@ -11,7 +11,8 @@ class Pemesanan extends Model
     protected $table = 'pemesanan';
 
     protected $fillable = [
-        'produk_suplai',
+        'barang_id',
+        'pelanggan_id',
         'jumlah',
         'harga_total',
 
@@ -19,8 +20,13 @@ class Pemesanan extends Model
 
 
 
-    public function stokbarang()
-{
-    return $this->belongsTo('App\StokBarang');
-}
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class);
+    }
+
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class);
+    }
 }
