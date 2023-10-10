@@ -188,6 +188,11 @@
     <script src="{{ asset('dist/assets/js/plugins/bootstrap.min.js') }}"></script>
     <script src="{{ asset('dist/assets/js/ripple.js') }}"></script>
     <script src="{{ asset('dist/assets/js/pcoded.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
+
 
 
     <!-- prism Js -->
@@ -256,6 +261,11 @@
                 }
             })
         }
+    </script>
+    <script>
+        new DataTable('#example', {
+    responsive: true
+});
     </script>
 </body>
 

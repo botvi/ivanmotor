@@ -10,15 +10,23 @@ class logincontroller extends Controller
 {
     public function halamanlogin()
     {
-        return view('login.loginaplikasi');
+        $user = Auth::user();
+        return view('login.loginaplikasi', ['user' => $user]);
     }
     public function postlogin(Request $request)
     {
         if (Auth::attempt($request->only('username', 'password'))) {
-            return redirect('/home');
+            $role = Auth::user()->role;
+    
+            if($role == 'customer') {
+                return redirect('/');
+            } elseif($role == 'admin') {
+                return redirect('/home'); 
+            }
         }
         return redirect('/');
     }
+    
     public function logout()
     {
         Auth::logout();

@@ -5,6 +5,7 @@
                 <li class="nav-item pcoded-menu-caption">
                     <label>Navigation</label>
                 </li>
+                @if (auth()->user()->role == 'admin')
                 <li class="nav-item">
                     <a class="nav-link " href="/">
                         <i class="fa fa-dashboard"></i>
@@ -49,6 +50,14 @@
                         <span class="pcoded-mtext">Pemesanan</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/pemesananonline">
+                        <i class="fa fa-folder"></i>
+                        <span class="pcoded-mtext">Pemesanan Online</span>
+                    </a>
+                </li>
+                @endif
+
                 <li class="nav-item">
                     <a class="nav-link " href="/login/logout">
                         <span class="pcoded-micon">

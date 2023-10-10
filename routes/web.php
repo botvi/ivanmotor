@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KeranjangController;
+
 use App\Http\Controllers\{
 
     homeController,
@@ -11,6 +13,8 @@ use App\Http\Controllers\{
     KategoriController,
     PelangganController,
     LoginController,
+    WebsiteController,
+    PemesananOnlineController,
 };
 
 
@@ -24,8 +28,20 @@ use App\Http\Controllers\{
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', [\App\Http\Controllers\WebsiteController::class, "index"]);
+Route::get('/about', [\App\Http\Controllers\WebsiteController::class, 'about']);
+Route::get('/kontak', [\App\Http\Controllers\WebsiteController::class, 'kontak']);
 
-Route::get('/', [LoginController::class, 'halamanlogin'])->name('login');
+// LOGIN CUSTOMER
+
+Route::post('/daftar', [WebsiteController::class, 'register']);
+Route::get('/daftar', [\App\Http\Controllers\WebsiteController::class, 'daftar'])->name('daftar');
+
+
+
+// LOGIN ADMIN
+
+Route::get('/login', [LoginController::class, 'halamanlogin'])->name('login');
 Route::get('/login/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -99,4 +115,27 @@ Route::group([
     Route::post('/', [PelangganController::class, 'store']);
     Route::post('/update/{id}', [PelangganController::class, 'update']);
     Route::get('/destroy/{id}', [PelangganController::class, 'destroy']);
+});
+
+
+Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'tambah'])->name('keranjang.tambah');
+Route::put('/keranjang/perbarui/{id}',  [KeranjangController::class, 'update']);
+Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus']);
+Route::get('/jumlah-item-keranjang', [KeranjangController::class, 'jumlahItemKeranjang']);
+
+Route::get('/checkout', [KeranjangController::class, 'checkout'])->name('checkout');
+Route::get('/pemesananonline', [PemesananOnlineController::class,'index'])->name('pemesanan');
+Route::put('/pemesanan/{id}/terima', [PemesananOnlineController::class,'terimaPemesanan']);
+
+Route::put('/pemesanan/{id}/update-status',  [PemesananOnlineController::class,'updateStatus']);
+
+
+
+
+Route::group([
+    'middleware' =>  ["auth"],
+    'prefix' => "keranjang"
+], function ($router) {
+    Route::get('/', [KeranjangController::class, 'index']);
+
 });
