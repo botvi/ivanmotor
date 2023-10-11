@@ -22,6 +22,9 @@
         rel="stylesheet">
     @vite(['resources/js/app.js'])
 
+
+
+
     @yield('style')
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -264,9 +267,10 @@
     </script>
     <script>
         new DataTable('#example', {
-    responsive: true
-});
+            responsive: true
+        });
     </script>
+
 </body>
 
 </html>

@@ -151,9 +151,10 @@ public function checkout()
         // Hapus data keranjang
         $keranjang->each->delete();
 
-        return redirect()->back()->with('success', 'Pesanan Anda telah berhasil ditempatkan.');
+       return redirect()->route('history')->with('success', 'Pesanan Anda telah berhasil ditempatkan.');
+
     } catch (\Exception $e) {
-        return redirect()->route('keranjang')->with('error', 'Terjadi kesalahan saat melakukan checkout.');
+        return redirect()->back()->with('error', 'Terjadi kesalahan saat melakukan checkout.');
     }
 }
 

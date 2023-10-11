@@ -48,7 +48,10 @@
                     <li><a class="nav-link" href="about.html">About us</a></li>
 
                     <li><a class="nav-link" href="contact.html">Contact us</a></li>
-                    @auth
+                    @if(Auth::check())
+                    <li><a class="nav-link" href="/history">Pesanan saya</a></li>
+                @endif
+                                    @auth
                         <li class="nav-link">Selamat datang, {{ Auth::user()->nama }}!</li>
                         <li class="nav-link"> <a href="/login/logout">Logout</a>
                         @else

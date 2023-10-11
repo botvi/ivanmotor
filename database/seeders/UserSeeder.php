@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             "nama" => "admin",
             "username" => "admin",
             "password" => bcrypt('password'),
+            "alamat" => "Taluk kuantan, Pekanbaru, Riau",
             "role" => "admin"
         ]);
     }

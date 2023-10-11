@@ -36,6 +36,7 @@ class PelangganController extends Controller
                 'nama_pelanggan' => 'required|string',
                 'alamat' => 'required|string',
                 'telepon' => 'required|string',
+                'jenis_pelanggan' => 'required|string',
     
             ]);
             if ($validator->fails()) {
@@ -51,7 +52,7 @@ class PelangganController extends Controller
             \DB::transaction(function () use ($request, $validator) {
 
 
-                $pelangganData = $request->except(['nama_pelanggan', 'alamat','telepon','created_at','updated_at']);
+                $pelangganData = $request->except(['nama_pelanggan', 'alamat','telepon','jenis_pelanggan','created_at','updated_at']);
                 $pelangganData += $validator->validated();
                 $pelanggan = Pelanggan::create($pelangganData);
                 if (!$pelanggan) {
@@ -74,6 +75,8 @@ class PelangganController extends Controller
                 'nama_pelanggan' => 'required|string',
                 'alamat' => 'required|string',
                 'telepon' => 'required|string',
+                'jenis_pelanggan' => 'required|string',
+
     
             ]);
             if ($validator->fails()) {
@@ -94,6 +97,7 @@ class PelangganController extends Controller
                 'nama_pelanggan',
                 'alamat',
                 'telepon',
+                'jenis_pelanggan',
             ]));
 
 

@@ -14,6 +14,7 @@ class Pelanggan extends Model
         'nama_pelanggan',
         'alamat',
         'telepon',
+        'jenis_pelanggan',
 
     ];
 }

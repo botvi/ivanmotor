@@ -44,6 +44,8 @@ class WebsiteController extends Controller
             'nama' => 'required',
             'username' => 'required|unique:users',
             'password' => 'required|min:6',
+            'alamat' => 'required',
+
         ]);
     
         $user = new User;
@@ -51,6 +53,8 @@ class WebsiteController extends Controller
         $user->username = $request->input('username'); 
         $user->role ='customer';
         $user->password = bcrypt($request->input('password')); 
+        $user->alamat = $request->input('alamat'); 
+
         $user->save();
     
         return redirect()->back()->with('success', 'Akun berhasil dibuat!');

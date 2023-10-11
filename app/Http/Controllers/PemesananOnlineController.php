@@ -16,6 +16,8 @@ public function index()
     $pemesanan = PemesananOnline::orderBy('created_at', 'desc')->get()->groupBy('user_id');
     return view('Page.Orderonline.show', compact('pemesanan'));
 }
+
+
 public function terimaPemesanan($id)
 {
     try {
@@ -39,10 +41,13 @@ public function terimaPemesanan($id)
 public function updateStatus($id) {
     // Ambil data dari request
     $status = request('status');
+    $keterangan = request('keterangan');
 
     // Lakukan pembaruan status sesuai dengan ID
     $pemesanan = PemesananOnline::find($id);
     $pemesanan->status = $status;
+    $pemesanan->keterangan = $keterangan; 
+
     $pemesanan->save();
 
     if ($status == 'Ditolak') {
@@ -60,5 +65,13 @@ public function updateStatus($id) {
 
 
 
+public function riwayatpesanan()
+{
+    // Ambil data keranjang berdasarkan user_id
+    $user_id = auth()->user()->id;
+    $pesanan = PemesananOnline::where('user_id', $user_id)->get();
+
+    return view('website.history', compact('pesanan'));
+}
 
 }

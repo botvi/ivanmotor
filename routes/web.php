@@ -122,9 +122,12 @@ Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'tambah'])->n
 Route::put('/keranjang/perbarui/{id}',  [KeranjangController::class, 'update']);
 Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus']);
 Route::get('/jumlah-item-keranjang', [KeranjangController::class, 'jumlahItemKeranjang']);
+Route::get('/history', [PemesananOnlineController::class, 'riwayatpesanan']);
+
 
 Route::get('/checkout', [KeranjangController::class, 'checkout'])->name('checkout');
 Route::get('/pemesananonline', [PemesananOnlineController::class,'index'])->name('pemesanan');
+
 Route::put('/pemesanan/{id}/terima', [PemesananOnlineController::class,'terimaPemesanan']);
 
 Route::put('/pemesanan/{id}/update-status',  [PemesananOnlineController::class,'updateStatus']);

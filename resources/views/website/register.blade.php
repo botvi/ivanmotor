@@ -49,6 +49,12 @@
                                 <input type="text" class="form-control" name="username" id="username"
                                     placeholder="">
                             </div>
+                            <div class="form-group mb-3">
+                                <label class="floating-label" for="alamat">Alamat</label>
+                                <textarea class="form-control" name="alamat" id="alamat" placeholder=""></textarea>
+                            </div>
+                            
+                   
                             <div class="form-group mb-4">
                                 <label class="floating-label" for="password">Password</label>
                                 <input type="password" class="form-control" name="password" id="password"

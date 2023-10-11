@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('harga_total');
             $table->string('status')->default('Pending');
+            $table->string('keterangan')->nullable();
+
 
             $table->timestamps();
 

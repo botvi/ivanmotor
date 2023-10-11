@@ -28,6 +28,7 @@
                         
                                     <th>Alamat Pelanggan</th>
                                     <th>Telepon Pelanggan</th>
+                                    <th>Jenis Pelanggan</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -38,6 +39,7 @@
                               
                                     <th>Alamat Pelanggan</th>
                                     <th>Telepon Pelanggan</th>
+                                    <th>Jenis Pelanggan</th>
                                     <th>#</th>
                                 </tr>
                             </tfoot>
@@ -90,7 +92,18 @@
                             </div>
                             
                         </div>
-          
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="jenis_pelanggan">Jenis pelanggan:</label>
+                                <select class="form-control w-full" id="jenis_pelanggan" name="jenis_pelanggan">
+                                    <option value="">-- Pilih Status --</option>
+                                    <option value="TETAP">TETAP</option>
+                                    <option value="TETAP TETAP">TIDAK TETAP</option>
+                        
+
+                                </select>
+                            </div>
+                        </div>
 
 
                             <div class="flex justify-end" style="width: 100%">
@@ -163,6 +176,9 @@
                 {
                     data: "telepon"
                 },
+                {
+                    data: "jenis_pelanggan"
+                },
 
 
                 {
@@ -191,6 +207,7 @@
                    
                         $('#alamat').val(selectedData.alamat);
                         $('#telepon').val(selectedData.telepon);
+                        $('#jenis_pelanggan').val(selectedData.jenis_pelanggan);
 
                         //untuk pasword tidak di edit disini
                         $("#form-entry").attr("action", "/pelanggan/update/" + id);
