@@ -132,8 +132,8 @@
                                 </tr>
                             </thead>
                         </table>
-                        <button id="toggleButton" class="btn btn-primary mb-3">Show</button>
-                        <div class="card hidden" id="itemCard">
+                        <button class="btn btn-primary mb-3 toggleButton">Show</button>
+                        <div class="card hidden itemCard">
                             <div class="table-responsive">
                                 <table class="table table-sm">
                                     <thead>
@@ -198,26 +198,26 @@
         new DataTable('#tables', {
     responsive: true
 });
-    </script>
 
-<script>
-    document.getElementById('toggleButton').addEventListener('click', function() {
-        var card = document.getElementById('itemCard');
+document.querySelectorAll('.toggleButton').forEach(function(button) {
+    button.addEventListener('click', function() {
+        var card = this.nextElementSibling;
 
         if (card.style.display === 'none' || card.style.display === '') {
             card.style.display = 'block';
             this.innerHTML = '<i class="bi bi-eye-slash"></i> Hide';
-            this.classList.remove('btn-primary'); // Hapus kelas btn-danger
-            this.classList.add('btn-danger'); // Tambahkan kelas btn-primary
+            this.classList.remove('btn-primary'); // Hapus kelas btn-primary
+            this.classList.add('btn-danger'); // Tambahkan kelas btn-danger
         } else {
             card.style.display = 'none';
             this.innerHTML = '<i class="bi bi-eye"></i> Show';
-            this.classList.remove('btn-danger'); // Hapus kelas btn-primary
-            this.classList.add('btn-primary'); // Tambahkan kelas btn-danger
+            this.classList.remove('btn-danger'); // Hapus kelas btn-danger
+            this.classList.add('btn-primary'); // Tambahkan kelas btn-primary
         }
     });
-</script>
+});
 
+</script>
 
 
 
