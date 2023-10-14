@@ -28,6 +28,8 @@
                                     <th>Nama Barang</th>
                                     <th>Nama Pemasok</th>
                                     <th>Harga Beli</th>
+                                    <th>Diskon</th>
+                                    <td>harga Diskon</td>
                                     <th>Satuan</th>
                                     <th>Stok Barang</th>
                                     <th>Kategori</th>
@@ -47,6 +49,8 @@
                                     <th>Nama Barang</th>
                                     <th>Nama Pemasok</th>
                                     <th>Harga Beli</th>
+                                    <th>Diskon</th>
+                                    <td>harga Diskon</td>
                                     <th>Satuan</th>
                                     <th>Stok Barang</th>
                                     <th>Kategori</th>
@@ -78,13 +82,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="/barang" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="form-entry"
-                        method="POST" enctype="multipart/form-data">
+                    <form action="/barang" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+                        enctype="multipart/form-data" id="form-entry" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <input class="form-control" id="kode_barang" name="kode_barang" type="text" hidden>
+                                    <input class="form-control" hidden id="kode_barang" name="kode_barang" type="text">
                                 </div>
                             </div>
                         </div>
@@ -114,6 +118,18 @@
                                 <div class="form-group">
                                     <label for="jumlah_stok">Harga beli:</label>
                                     <input class="form-control" id="harga_beli" name="harga_beli" type="text">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="jumlah_stok">Diskon Pelanggan Tetap (%)</label>
+                                    <input class="form-control" id="diskon" name="diskon" type="text">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="jumlah_stok">Harga Pelanggan Tetap</label>
+                                    <input class="form-control" id="harga_diskon" type="text">
                                 </div>
                             </div>
                             <div class="col-6">
@@ -227,6 +243,14 @@
                 return '{}'; // Mengembalikan objek kosong jika parsing gagal
             }
         }
+        // fungsi konversi string ke rupiah
+        function convertToRupiah(angka) {
+            var rupiah = '';
+            var angkarev = angka.toString().split('').reverse().join('');
+            for (var i = 0; i < angkarev.length; i++)
+                if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + '.';
+            return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
+        }
         const URI = "/barang/show-data";
         const tables = new DataTable("#tables", {
             processing: true,
@@ -264,7 +288,29 @@
                     data: "pemasok.nama_pemasok"
                 },
                 {
-                    data: "harga_beli"
+                    data: "harga_beli",
+                    // convert rubah ke rupiah
+                    render: function(data, type, row) {
+                        return convertToRupiah(`${row.harga_beli??""}`)
+                    }
+                },
+
+                {
+                    data: "diskon",
+                    render: function(data, type, row) {
+                        if (data > 0) {
+                            return data + '%';
+                        } else {
+                            return '0%';
+                        }
+                    }
+                },
+                {
+                    data: null,
+                    render: function(data, type, row) {
+                        const totalHarga = row.harga_beli - (row.harga_beli * row.diskon / 100);
+                        return convertToRupiah(`${totalHarga??"0"}`)
+                    }
                 },
 
                 {
@@ -283,7 +329,8 @@
                 {
                     data: "gambar_barang",
                     render: function(data, type, row) {
-                        return '<a href="/uploads/' + data + '" target="_blank" class="badge badge-info">Lihat Gambar</a>';
+                        return '<a href="/uploads/' + data +
+                            '" target="_blank" class="badge badge-info">Lihat Gambar</a>';
                     }
                 },
 
@@ -356,6 +403,27 @@
             const url = "/barang/destroy/" + id;
             destory(url);
         });
+        // ketika "#harga_beli" atau "#diskon" keydown
+
+        $("#harga_beli").keyup(function() {
+            var harga_beli = $("#harga_beli").val();
+            var diskon = $("#diskon").val();
+            if (harga_beli == "" && diskon == "") {
+                harga_beli = 0;
+            }
+            var harga_diskon = harga_beli - (harga_beli * diskon / 100);
+            $("#harga_diskon").val(harga_diskon);
+        })
+
+        $("#diskon").keyup(function() {
+            var harga_beli = $("#harga_beli").val();
+            var diskon = $("#diskon").val();
+            if (harga_beli == "" && diskon == "") {
+                harga_beli = 0;
+            }
+            var harga_diskon = harga_beli - (harga_beli * diskon / 100);
+            $("#harga_diskon").val(harga_diskon);
+        })
     </script>
     <script>
         $(document).ready(function() {

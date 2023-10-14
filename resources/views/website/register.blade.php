@@ -12,16 +12,16 @@
   <![endif]-->
     <!-- Meta -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="">
-    <meta name="author" content="Phoenixcoded" />
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" name="viewport">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="" name="description" />
+    <meta content="" name="keywords">
+    <meta content="Phoenixcoded" name="author" />
     <!-- Favicon icon -->
-    <link rel="icon" href="{{ asset('dist') }}/assets/images/favicon.ico" type="image/x-icon">
+    <link href="{{ asset('dist') }}/assets/images/favicon.ico" rel="icon" type="image/x-icon">
 
     <!-- vendor css -->
-    <link rel="stylesheet" href="{{ asset('dist') }}/assets/css/style.css">
+    <link href="{{ asset('dist') }}/assets/css/style.css" rel="stylesheet">
 
 
 
@@ -35,35 +35,41 @@
             <div class="row align-items-center text-center">
                 <div class="col-md-12">
                     <div class="card-body">
-                        <img src="assets/images/logo-dark.png" alt="" class="img-fluid mb-4">
+                        <img alt="" class="img-fluid mb-4" src="assets/images/logo-dark.png">
                         <h4 class="mb-3 f-w-400">Sign up</h4>
-                        <form action="/daftar" method="post" class="pt-3">
+                        <form action="/daftar" class="pt-3" method="post">
                             @csrf
 
                             <div class="form-group mb-3">
                                 <label class="floating-label" for="nama">Full Name</label>
-                                <input type="text" class="form-control" name="nama" id="nama" placeholder="">
+                                <input class="form-control" id="nama" name="nama" placeholder="" type="text">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="floating-label" for="username">Username</label>
-                                <input type="text" class="form-control" name="username" id="username"
-                                    placeholder="">
+                                <input class="form-control" id="username" name="username" placeholder=""
+                                    type="text">
                             </div>
+
+                            <div class="form-group mb-3">
+                                <label class="floating-label" for="telp">Telepon</label>
+                                <input class="form-control" id="telp" name="telepon" placeholder="" type="text">
+                            </div>
+
                             <div class="form-group mb-3">
                                 <label class="floating-label" for="alamat">Alamat</label>
-                                <textarea class="form-control" name="alamat" id="alamat" placeholder=""></textarea>
+                                <textarea class="form-control" id="alamat" name="alamat" placeholder=""></textarea>
                             </div>
-                            
-                   
+
+
                             <div class="form-group mb-4">
                                 <label class="floating-label" for="password">Password</label>
-                                <input type="password" class="form-control" name="password" id="password"
-                                    placeholder="">
+                                <input class="form-control" id="password" name="password" placeholder=""
+                                    type="password">
                             </div>
-                            
+
                             <button class="btn btn-block btn-warning btn-lg font-weight-medium auth-form-btn"
-                            type="submit">SIGN UP</button>
-                            <p class="mb-2">Already have an account? <a href="/login" class="f-w-400">Signin</a>
+                                type="submit">SIGN UP</button>
+                            <p class="mb-2">Already have an account? <a class="f-w-400" href="/login">Signin</a>
                             </p>
                         </form>
                     </div>
@@ -83,7 +89,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script>
-    @if(session('success'))
+    @if (session('success'))
         Swal.fire({
             icon: 'success',
             title: 'Sukses!',

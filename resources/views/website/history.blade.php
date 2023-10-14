@@ -17,12 +17,16 @@
             </thead>
             <tbody>
                 @forelse($pesanan as $item)
+                    @php
+                        $totalHargaDikurangiDiskon = $item->harga_total - ($item->harga_total * ($item->diskon ?? 0)) / 100;
+                    @endphp
                     <tr>
                         <td>{{ $item->barang->nama_barang }}</td>
                         <td>{{ $item->quantity }}</td>
-                        <td>{{ $item->harga_total }}</td>                  
-                        <td>{{ $item->status }}</td>                  
-                        <td>{{ $item->keterangan }}</td>                  
+                        <td>{{ $item->diskon }}%</td>
+                        <td>Rp. {{ number_format($totalHargaDikurangiDiskon, 0) }}</td>
+                        <td>{{ $item->status }}</td>
+                        <td>{{ $item->keterangan }}</td>
                     </tr>
                 @empty
                     <tr>
@@ -33,5 +37,3 @@
         </table>
     </div>
 @endsection
-
-

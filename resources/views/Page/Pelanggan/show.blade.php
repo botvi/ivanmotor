@@ -25,7 +25,7 @@
                                 <tr>
                                     <th class="w-[25px]">No</th>
                                     <th>Nama Pelanggan</th>
-                        
+
                                     <th>Alamat Pelanggan</th>
                                     <th>Telepon Pelanggan</th>
                                     <th>Jenis Pelanggan</th>
@@ -36,7 +36,7 @@
                                 <tr>
                                     <th class="w-[25px]">No</th>
                                     <th>Nama Pelanggan</th>
-                              
+
                                     <th>Alamat Pelanggan</th>
                                     <th>Telepon Pelanggan</th>
                                     <th>Jenis Pelanggan</th>
@@ -65,7 +65,7 @@
                     <form action="/pelanggan" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="form-entry"
                         method="POST">
                         @csrf
-                       
+
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -79,18 +79,18 @@
                                     <input class="form-control" id="alamat" name="alamat" type="text">
                                 </div>
                             </div>
-                         
-                          
+
+
                         </div>
                         <div class="row">
-                           
+
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="telepon">Telepon Pelanggan:</label>
                                     <input class="form-control" id="telepon" name="telepon" type="text">
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="col-6">
                             <div class="form-group">
@@ -98,17 +98,17 @@
                                 <select class="form-control w-full" id="jenis_pelanggan" name="jenis_pelanggan">
                                     <option value="">-- Pilih Status --</option>
                                     <option value="TETAP">TETAP</option>
-                                    <option value="TETAP TETAP">TIDAK TETAP</option>
-                        
+                                    <option value="TIDAK TETAP">TIDAK TETAP</option>
+
 
                                 </select>
                             </div>
                         </div>
 
 
-                            <div class="flex justify-end" style="width: 100%">
-                                <button class="btn btn-primary bg-green-500 w-[200px]" type="submit">Submit</button>
-                            </div>
+                        <div class="flex justify-end" style="width: 100%">
+                            <button class="btn btn-primary bg-green-500 w-[200px]" type="submit">Submit</button>
+                        </div>
 
                     </form>
                 </div>
@@ -166,7 +166,7 @@
             stripeClasses: [],
             columns: [{
                     data: 'no'
-                }, 
+                },
                 {
                     data: "nama_pelanggan",
                 },
@@ -204,7 +204,7 @@
 
                     if (selectedData) {
                         $('#nama_pelanggan').val(selectedData.nama_pelanggan);
-                   
+
                         $('#alamat').val(selectedData.alamat);
                         $('#telepon').val(selectedData.telepon);
                         $('#jenis_pelanggan').val(selectedData.jenis_pelanggan);

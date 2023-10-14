@@ -14,6 +14,7 @@ class Barang extends Model
         'nama_barang',
         'kode_barang',
         'harga_beli',
+        'diskon',
         'satuan',
         'stok_barang',
         'pemasok_id',
@@ -38,6 +39,4 @@ class Barang extends Model
     {
         return $this->hasMany(Keranjang::class, 'barang_id');
     }
-    
-
 }

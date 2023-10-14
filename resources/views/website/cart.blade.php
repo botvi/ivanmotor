@@ -12,27 +12,34 @@
                     <th>Harga</th>
                     <th>Quantity</th>
                     <th>Total Harga</th>
+                    <th>Diskon</th>
                     <th>Aksi</th> <!-- Tambah kolom untuk aksi -->
                 </tr>
             </thead>
             <tbody>
                 @forelse($keranjang as $item)
+                    @php
+                        $totalDiskon = 0;
+                        if (!empty($item->barang->diskon)) {
+                            $totalDiskon = $item->harga_total - ($item->barang->harga_beli * $item->barang->diskon) / 100;
+                        }
+                    @endphp
                     <tr>
                         <td>{{ $item->barang->nama_barang }}</td>
                         <td>Rp {{ $item->barang->harga_beli }}</td>
                         <td>
-                            <input type="number" min="1" value="{{ $item->quantity }}"
-                                class="form-control quantity-input" data-id="{{ $item->id }}"
-                                data-harga-beli="{{ $item->barang->harga_beli }}"
-                                data-stok="{{ $item->barang->stok_barang }}">
+                            <input class="form-control quantity-input" data-harga-beli="{{ $item->barang->harga_beli }}"
+                                data-id="{{ $item->id }}" data-stok="{{ $item->barang->stok_barang }}" min="1"
+                                type="number" value="{{ $item->quantity }}">
                         </td>
                         <td id="total-harga-{{ $item->id }}">Rp {{ $item->harga_total }}</td>
+                        <td id="total-diskon-{{ $item->id }}">Rp {{ $totalDiskon }} ({{ $item->diskon }}%)</td>
                         <td>
                             <button class="btn btn-primary perbarui-keranjang" data-id="{{ $item->id }}">Perbarui
                                 Keranjang</button>
                             <button class="btn btn-danger hapus-keranjang" data-id="{{ $item->id }}"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-trash" viewBox="0 0 16 16">
+                                    class="bi bi-trash" fill="currentColor" height="16" viewBox="0 0 16 16"
+                                    width="16" xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
                                     <path
@@ -47,7 +54,7 @@
                 @endforelse
             </tbody>
         </table>
-        <a href="{{ route('checkout') }}" class="btn btn-primary">Checkout</a>
+        <a class="btn btn-primary" href="{{ route('checkout') }}">Checkout</a>
     </div>
 @endsection
 

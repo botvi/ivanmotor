@@ -26,8 +26,10 @@ class BarangController extends Controller
         return view('Page.Barang.show', compact('pemasok', 'kategori'));
     }
 
-    public function show_data()
+    public function show_data(Request $request)
     {
+
+
         return DataTableFormat::Call()->query(function () {
             return Barang::with('pemasok', 'kategori')->select('barang.*');
         })
@@ -48,6 +50,7 @@ class BarangController extends Controller
             'nama_barang' => 'required|string|max:255',
             'kode_barang' => 'required|string|max:255',
             'harga_beli' => 'required|numeric',
+            'diskon' => 'nullable|string',
             'satuan' => 'required|string|max:255',
             'stok_barang' => 'required|integer',
             'pemasok_id' => 'required|exists:pemasok,id',
@@ -61,8 +64,8 @@ class BarangController extends Controller
         try {
             $barang = new Barang($request->all());
             // Mendapatkan timestamp untuk digunakan sebagai kode barang
-        $timestamp = time();
-        $barang->kode_barang = 'BRG-' . $timestamp;
+            $timestamp = time();
+            $barang->kode_barang = 'BRG-' . $timestamp;
 
             // Unggah dan simpan gambar barang
             if ($request->hasFile('gambar_barang')) {
@@ -87,6 +90,7 @@ class BarangController extends Controller
         $request->validate([
             'nama_barang' => 'required|string|max:255',
             'harga_beli' => 'required|numeric',
+            'diskon' => 'nullable|string',
             'satuan' => 'required|string|max:255',
             'stok_barang' => 'required|integer',
             'pemasok_id' => 'required|exists:pemasok,id',
@@ -96,18 +100,18 @@ class BarangController extends Controller
             'lokasi_penyimpanan' => 'nullable|string|max:255',
             'tanggal_expire' => 'nullable|date',
         ]);
-    
+
         try {
             $barang = Barang::findOrFail($id);
-    
+
             // Simpan kode_barang ke sementara variabel untuk memastikannya tidak terpengaruh oleh pembaruan
             $kode_barang = $barang->kode_barang;
-    
+
             $barang->fill($request->all());
-    
+
             // Kembalikan kode_barang ke nilainya yang asli
             $barang->kode_barang = $kode_barang;
-    
+
             // Unggah dan simpan gambar barang
             if ($request->hasFile('gambar_barang')) {
                 $file = $request->file('gambar_barang');
@@ -115,9 +119,9 @@ class BarangController extends Controller
                 $file->move(public_path('uploads'), $fileName);
                 $barang->gambar_barang = $fileName;
             }
-    
+
             $barang->save();
-    
+
             Alert::success('Success', 'Data berhasil diperbarui');
             return redirect()->back();
         } catch (\Throwable $th) {
@@ -125,7 +129,7 @@ class BarangController extends Controller
             return redirect()->back();
         }
     }
-    
+
 
 
     public function destroy($id)

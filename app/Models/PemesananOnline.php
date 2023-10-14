@@ -10,7 +10,7 @@ class PemesananOnline extends Model
     use HasFactory;
 
     protected $table = 'pemesanan_online';
-    protected $fillable = ['user_id', 'barang_id', 'quantity', 'harga_total','status','keterangan'];
+    protected $fillable = ['user_id', 'barang_id', 'quantity', 'diskon', 'harga_total', 'status', 'keterangan', 'deliver'];
 
     public function user()
     {
@@ -23,10 +23,8 @@ class PemesananOnline extends Model
     // }
 
 
-public function barang()
-{
-    return $this->belongsTo('App\Models\Barang', 'barang_id');
-}
-
-    
+    public function barang()
+    {
+        return $this->belongsTo('App\Models\Barang', 'barang_id');
+    }
 }

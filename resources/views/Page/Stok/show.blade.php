@@ -1,4 +1,8 @@
 @extends('template.layout')
+@php
+    $stok = request()->get('stok');
+@endphp
+
 @section('content')
     <div class="page-header">
         <div class="page-block">
@@ -6,7 +10,17 @@
                 <div class="col-md-12">
                     <div class="flex justify-between">
                         <h1 class="text-white text-bold" style="font-size: 1.5em">Data Stok</h1>
-                      
+                        {{-- button group untuk filter stok habis, stok tersedia, semua barang --}}
+                        <div>
+                            <div aria-label="Stok" class="btn-group" role="group">
+                                <a class="btn btn-secondary {{ $stok === 'semua' || empty($stok) ? 'active' : '' }}"
+                                    href="?stok=semua" type="button">Semua Barang</a>
+                                <a class="btn btn-secondary {{ $stok === 'habis' ? 'active' : '' }}" href="?stok=habis"
+                                    type="button">Stok Habis</a>
+                                <a class="btn btn-secondary {{ $stok === 'tersedia' ? 'active' : '' }}"
+                                    href="?stok=tersedia" type="button">Stok Tersedia</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,8 +82,8 @@
                                     <input class="form-control" id="stok_barang" name="stok_barang" type="number">
                                 </div>
                             </div>
-                          
-                            
+
+
                         </div>
 
                         <div class="flex justify-end" style="width: 100%">
@@ -109,6 +123,7 @@
                 return '{}'; // Mengembalikan objek kosong jika parsing gagal
             }
         }
+        const queryParam = `{{ request()->query('stok') }}`;
         const URI = "/stok/show-data";
         const tables = new DataTable("#tables", {
             processing: true,
@@ -117,7 +132,8 @@
                 url: URI,
                 headers: {
                     "Accept": "application/ld+json",
-                    "Content-Type": "text/json; charset=utf-8"
+                    "Content-Type": "text/json; charset=utf-8",
+                    "stok": queryParam
                 },
                 beforeSend: function(request) {
                     console.error(request);
@@ -134,14 +150,14 @@
             columns: [{
                     data: 'no'
                 },
-        
+
                 {
                     data: "nama_barang"
                 },
                 {
                     data: "stok_barang"
                 },
-               
+
                 {
                     data: null,
                     render: function(data, type, row) {
@@ -177,6 +193,5 @@
                 toastr.info('aksi gagal?')
             }
         })
-      
     </script>
 @endsection

@@ -1,4 +1,9 @@
 @extends('website.layout')
+<style>
+    .product-price-del {
+        text-decoration: line-through;
+    }
+</style>
 @section('content')
     <!-- Start Hero Section -->
     <div class="hero">
@@ -24,9 +29,32 @@
                 @foreach ($barang as $item)
                     <div class="col-12 col-md-4 col-lg-3 mb-5 rounded">
                         <a class="product-item shadow rounded" href="#">
-                            <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="img-fluid product-thumbnail">
+                            <img class="img-fluid product-thumbnail" src="{{ asset('uploads/' . $item->gambar_barang) }}">
                             <h4 class="product-title">{{ $item->nama_barang }}</h4>
-                            <strong class="product-price">Rp {{ $item->harga_beli }}</strong>
+                            @php
+                                $us = auth()->user()->id ?? null;
+
+                                $cekPelanggan = \App\Models\Pelanggan::where('user_id', $us)->first();
+
+                            @endphp
+                            @if (!empty($cekPelanggan) && $cekPelanggan->jenis_pelanggan == 'TETAP')
+                                @php
+                                    $hargaBeli = $item->harga_beli;
+                                    $diskon = $item->diskon;
+                                    $totalSetelahDiskon = $hargaBeli - ($hargaBeli * $diskon) / 100;
+
+                                @endphp
+                                <strong class="product-price">
+                                    <span class="">Rp.
+                                        {{ number_format($totalSetelahDiskon, 0) }}</span></strong>
+                            @endif
+                            <br>
+                            <strong class="product-price">
+                                <span
+                                    class="{{ ($cekPelanggan->jenis_pelanggan ?? '') == 'TETAP' ? 'product-price-del' : '' }}">Rp.
+                                    {{ number_format($item->harga_beli, 0) }}</span>
+                            </strong>
+
                             <h3 class="product-price text-success">{{ $item->kategori->kategori }}</h3>
                             <h5 class="product-price text-warning">
                                 @if ($item->stok_barang > 0)

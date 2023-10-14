@@ -17,7 +17,7 @@
                         <td>{{ $counter++ }}</td>
                         <td>{{ $pemesananUser->first()->user->nama }}</td>
                         <td>
-                            <a class="btn btn-success" data-toggle="modal" data-target="#modal{{ $userId }}">Lihat Detail
+                            <a class="btn btn-success" data-target="#modal{{ $userId }}" data-toggle="modal">Lihat Detail
                                 Pemesanan</a>
                         </td>
                     </tr>
@@ -35,13 +35,13 @@
 
     <!-- Di dalam konten modal -->
     @foreach ($pemesanan as $userId => $pemesananUser)
-        <div class="modal fade" id="modal{{ $userId }}" tabindex="-1" role="dialog"
-            aria-labelledby="modal{{ $userId }}Label" aria-hidden="true">
+        <div aria-hidden="true" aria-labelledby="modal{{ $userId }}Label" class="modal fade"
+            id="modal{{ $userId }}" role="dialog" tabindex="-1">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modal{{ $userId }}Label">Rincian Pemesanan</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -63,8 +63,8 @@
                         <table class="table table-bordered table-responsive ">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="bg-primary">TOTAL HARGA YANG HARUS DI BAYAR</th>
-                                    <th scope="col" class="bg-primary">IDR {{ $totalHargaPending }}</th>
+                                    <th class="bg-primary" scope="col">TOTAL HARGA YANG HARUS DI BAYAR</th>
+                                    <th class="bg-primary" scope="col">IDR {{ $totalHargaPending }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -74,6 +74,9 @@
                         <!-- Form untuk mengubah status -->
                         @foreach ($pemesananUser as $pemesananItem)
                             @if ($pemesananItem->status == 'Pending')
+                                @php
+                                    $totalHargaDikurangiDiskon = $pemesananItem->harga_total - ($pemesananItem->harga_total * ($pemesananItem->diskon ?? 0)) / 100;
+                                @endphp
                                 <div class="card">
                                     <div class="table-responsive">
                                         <table class="table table-sm">
@@ -81,6 +84,7 @@
                                                 <tr>
                                                     <th scope="col">Nama Barang</th>
                                                     <th scope="col">Quantity</th>
+                                                    <th scope="col">Diskon</th>
                                                     <th scope="col">Harga Total</th>
                                                 </tr>
                                             </thead>
@@ -88,28 +92,29 @@
                                                 <tr>
                                                     <td>{{ $pemesananItem->barang->nama_barang }}</td>
                                                     <td>{{ $pemesananItem->quantity }}</td>
-                                                    <td>{{ $pemesananItem->harga_total }}</td>
+                                                    <td>{{ $pemesananItem->diskon }}%</td>
+                                                    <td>{{ $totalHargaDikurangiDiskon }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                                <form id="updateStatusForm{{ $pemesananItem->id }}"
-                                    action="{{ url("/pemesanan/{$pemesananItem->id}/update-status") }}" method="POST">
+                                <form action="{{ url("/pemesanan/{$pemesananItem->id}/update-status") }}"
+                                    id="updateStatusForm{{ $pemesananItem->id }}" method="POST">
                                     @csrf
                                     @method('PUT')
 
                                     <div class="form-group">
                                         <label for="status{{ $pemesananItem->id }}">Status:</label>
                                         <select class="form-control" id="status{{ $pemesananItem->id }}" name="status">
-                                            <option value="Pending"
-                                                {{ $pemesananItem->status == 'Pending' ? 'selected' : '' }}>Pending
+                                            <option {{ $pemesananItem->status == 'Pending' ? 'selected' : '' }}
+                                                value="Pending">Pending
                                             </option>
-                                            <option value="Diterima"
-                                                {{ $pemesananItem->status == 'Diterima' ? 'selected' : '' }}>Diterima
+                                            <option {{ $pemesananItem->status == 'Diterima' ? 'selected' : '' }}
+                                                value="Diterima">Diterima
                                             </option>
-                                            <option value="Ditolak"
-                                                {{ $pemesananItem->status == 'Ditolak' ? 'selected' : '' }}>Ditolak
+                                            <option {{ $pemesananItem->status == 'Ditolak' ? 'selected' : '' }}
+                                                value="Ditolak">Ditolak
                                             </option>
                                         </select>
                                     </div>
@@ -118,8 +123,8 @@
                                         <textarea class="form-control" id="keterangan{{ $pemesananItem->id }}" name="keterangan" rows="3">{{ $pemesananItem->keterangan }}</textarea>
                                     </div>
 
-                                    <button class="btn btn-success btn-sm ml-1 w-[100px] mb-5" id="simpanstatus"
-                                        data-pemesanan-id="{{ $pemesananItem->id }}">Simpan</button>
+                                    <button class="btn btn-success btn-sm ml-1 w-[100px] mb-5"
+                                        data-pemesanan-id="{{ $pemesananItem->id }}" id="simpanstatus">Simpan</button>
                                 </form>
                             @endif
                         @endforeach
@@ -128,7 +133,7 @@
                         <table class="table table-bordered table-responsive ">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="bg-danger text-light text-center">RIWAYAT PEMESANAN</th>
+                                    <th class="bg-danger text-light text-center" scope="col">RIWAYAT PEMESANAN</th>
                                 </tr>
                             </thead>
                         </table>
@@ -196,28 +201,27 @@
 
     <script>
         new DataTable('#tables', {
-    responsive: true
-});
+            responsive: true
+        });
 
-document.querySelectorAll('.toggleButton').forEach(function(button) {
-    button.addEventListener('click', function() {
-        var card = this.nextElementSibling;
+        document.querySelectorAll('.toggleButton').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var card = this.nextElementSibling;
 
-        if (card.style.display === 'none' || card.style.display === '') {
-            card.style.display = 'block';
-            this.innerHTML = '<i class="bi bi-eye-slash"></i> Hide';
-            this.classList.remove('btn-primary'); // Hapus kelas btn-primary
-            this.classList.add('btn-danger'); // Tambahkan kelas btn-danger
-        } else {
-            card.style.display = 'none';
-            this.innerHTML = '<i class="bi bi-eye"></i> Show';
-            this.classList.remove('btn-danger'); // Hapus kelas btn-danger
-            this.classList.add('btn-primary'); // Tambahkan kelas btn-primary
-        }
-    });
-});
-
-</script>
+                if (card.style.display === 'none' || card.style.display === '') {
+                    card.style.display = 'block';
+                    this.innerHTML = '<i class="bi bi-eye-slash"></i> Hide';
+                    this.classList.remove('btn-primary'); // Hapus kelas btn-primary
+                    this.classList.add('btn-danger'); // Tambahkan kelas btn-danger
+                } else {
+                    card.style.display = 'none';
+                    this.innerHTML = '<i class="bi bi-eye"></i> Show';
+                    this.classList.remove('btn-danger'); // Hapus kelas btn-danger
+                    this.classList.add('btn-primary'); // Tambahkan kelas btn-primary
+                }
+            });
+        });
+    </script>
 
 
 

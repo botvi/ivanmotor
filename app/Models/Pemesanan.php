@@ -15,7 +15,6 @@ class Pemesanan extends Model
         'pelanggan_id',
         'jumlah',
         'harga_total',
-
     ];
 
 

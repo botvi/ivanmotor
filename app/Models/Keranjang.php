@@ -16,6 +16,7 @@ class Keranjang extends Model
         'barang_id',
         'quantity',
         'harga_total',
+        'diskon',
     ];
 
     public function user()
@@ -27,5 +28,4 @@ class Keranjang extends Model
     {
         return $this->belongsTo(Barang::class);
     }
-    
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('barang_id');
             $table->integer('quantity');
             $table->string('harga_total');
+            $table->string('diskon')->nullable()->default(0);
             $table->string('status')->default('Pending');
             $table->string('keterangan')->nullable();
 

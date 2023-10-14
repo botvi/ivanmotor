@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('pelanggan', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger("user_id")->references('id')->on('users');
             $table->string('nama_pelanggan');
             $table->string('alamat');
             $table->string('telepon');

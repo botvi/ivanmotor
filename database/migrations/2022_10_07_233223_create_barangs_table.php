@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_barang');
             $table->string('kode_barang');
             $table->string('harga_beli');
+            $table->string('diskon')->nullable();
             $table->string('satuan');
             $table->integer('stok_barang');
             $table->unsignedBigInteger('pemasok_id');
