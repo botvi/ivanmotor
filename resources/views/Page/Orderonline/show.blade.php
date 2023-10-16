@@ -73,8 +73,8 @@
 
                         <!-- Form untuk mengubah status -->
                         @foreach ($pemesananUser as $pemesananItem)
-                            @if ($pemesananItem->status == 'Pending')
-                                @php
+                        @if (in_array($pemesananItem->status, ['Pending', 'Proses','Ditolak','Di antar','Di ambil']))
+                        @php
                                     $totalHargaDikurangiDiskon = $pemesananItem->harga_total - ($pemesananItem->harga_total * ($pemesananItem->diskon ?? 0)) / 100;
                                 @endphp
                                 <div class="card">
@@ -110,11 +110,20 @@
                                             <option {{ $pemesananItem->status == 'Pending' ? 'selected' : '' }}
                                                 value="Pending">Pending
                                             </option>
-                                            <option {{ $pemesananItem->status == 'Diterima' ? 'selected' : '' }}
-                                                value="Diterima">Diterima
+                                            <option {{ $pemesananItem->status == 'Proses' ? 'selected' : '' }}
+                                                value="Proses">Proses
                                             </option>
                                             <option {{ $pemesananItem->status == 'Ditolak' ? 'selected' : '' }}
                                                 value="Ditolak">Ditolak
+                                            </option>
+                                            <option {{ $pemesananItem->status == 'Di ambil' ? 'selected' : '' }}
+                                                value="Di ambil">Di ambil
+                                            </option>
+                                            <option {{ $pemesananItem->status == 'Di antar' ? 'selected' : '' }}
+                                                value="Di antar">Di antar
+                                            </option>
+                                            <option {{ $pemesananItem->status == 'Di bayar' ? 'selected' : '' }}
+                                                value="Di bayar">Di bayar
                                             </option>
                                         </select>
                                     </div>
@@ -151,16 +160,20 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($pemesananUser as $pemesananItem)
-                                            @if ($pemesananItem->status == 'Diterima' || $pemesananItem->status == 'Ditolak')
+                                            @if ($pemesananItem->status == 'Di antar' || $pemesananItem->status == 'Di ambil' || $pemesananItem->status == 'Ditolak' || $pemesananItem->status == 'Di bayar')
                                                 <tr>
                                                     <td>{{ $pemesananItem->barang->nama_barang }}</td>
                                                     <td>{{ $pemesananItem->quantity }}</td>
                                                     <td>{{ $pemesananItem->harga_total }}</td>
                                                     <td>
-                                                        @if ($pemesananItem->status == 'Diterima')
-                                                            <span class="badge badge-success">Diterima</span>
+                                                        @if ($pemesananItem->status == 'Di antar')
+                                                            <span class="badge badge-warning">Di antar</span>
+                                                        @elseif ($pemesananItem->status == 'Di ambil')
+                                                            <span class="badge badge-warning">Di ambil</span>
                                                         @elseif ($pemesananItem->status == 'Ditolak')
                                                             <span class="badge badge-danger">Ditolak</span>
+                                                        @elseif ($pemesananItem->status == 'Di bayar')
+                                                            <span class="badge badge-success">Di bayar</span>
                                                         @endif
                                                     </td>
                                                 </tr>

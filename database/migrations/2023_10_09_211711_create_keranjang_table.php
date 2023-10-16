@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('barang_id');
             $table->integer('quantity');
             $table->string('harga_total');
+            $table->string('diskon')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

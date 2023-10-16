@@ -74,7 +74,7 @@ class KeranjangController extends Controller
 
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()],500);
         }
     }
 

@@ -15,6 +15,7 @@ use App\Http\Controllers\{
     LoginController,
     WebsiteController,
     PemesananOnlineController,
+    LaporanController,
 };
 
 
@@ -142,3 +143,10 @@ Route::group([
     Route::get('/', [KeranjangController::class, 'index']);
 
 });
+
+
+Route::get('/laporan/pemasok', [LaporanController::class, 'laporanPemasok']);
+Route::get('/laporan/barang', [LaporanController::class, 'laporanBarang']);
+Route::get('/laporan/penjualan', 'App\Http\Controllers\LaporanController@laporanPenjualan')->name('laporan.penjualan');
+
+Route::get('/laporan/print', 'App\Http\Controllers\LaporanController@print')->name('laporan.print');
