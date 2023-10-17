@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('harga_total');
             $table->string('diskon')->nullable()->default(0);
             $table->string('status')->default('Pending');
+            $table->string('bukti')->nullable();
             $table->string('keterangan')->nullable();
 
 

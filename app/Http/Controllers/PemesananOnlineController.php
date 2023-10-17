@@ -38,25 +38,43 @@ public function terimaPemesanan($id)
         return response()->json(['success' => false, 'message' => $e->getMessage()]);
     }
 }
-public function updateStatus($id) {
+public function updateStatus(Request $request, $id) {
     // Ambil data dari request
-    $status = request('status');
-    $keterangan = request('keterangan');
+    $status = $request->input('status');
+    $keterangan = $request->input('keterangan');
+    
+    // Handle file upload
+    if ($request->hasFile('bukti')) {
+        $file = $request->file('bukti');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('uploads'), $fileName);
+    }
 
     // Lakukan pembaruan status sesuai dengan ID
     $pemesanan = PemesananOnline::find($id);
+
+    if (!$pemesanan) {
+        return response('Pemesanan tidak ditemukan', 404);
+    }
+
     $pemesanan->status = $status;
     $pemesanan->keterangan = $keterangan; 
+
+    if (isset($fileName)) {
+        $pemesanan->bukti = $fileName;
+    }
 
     $pemesanan->save();
 
     if ($status == 'Ditolak') {
         // Ambil item terkait
-        $pemesananItem = $pemesanan->barang;
+        $pemesananItem = $pemesanan->barang()->first(); // Assuming there's a relationship named 'barang'
 
-        // Tambahkan kembali stok barang
-        $pemesananItem->stok_barang += $pemesanan->quantity;
-        $pemesananItem->save();
+        if ($pemesananItem) {
+            // Tambahkan kembali stok barang
+            $pemesananItem->stok_barang += $pemesanan->quantity;
+            $pemesananItem->save();
+        }
     }
 
     // Kirim respon sukses (response()->json() jika menggunakan API)
@@ -73,5 +91,23 @@ public function riwayatpesanan()
 
     return view('website.history', compact('pesanan'));
 }
+
+
+
+
+
+
+public function viewByStatus($status) {
+    // Ambil data berdasarkan status dan gabungkan dengan informasi barang dan pengguna
+    $pemesanan = PemesananOnline::where('status', $status)
+        ->join('barang', 'pemesanan_online.barang_id', '=', 'barang.id')
+        ->join('users', 'pemesanan_online.user_id', '=', 'users.id')
+        ->select('pemesanan_online.*', 'barang.nama_barang', 'users.nama as nama')
+        ->get();
+
+    // Kirim data ke halaman baru
+    return view('Page.Orderonline.status', compact('pemesanan'));
+}
+
 
 }

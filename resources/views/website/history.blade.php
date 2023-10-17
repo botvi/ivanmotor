@@ -3,6 +3,8 @@
 @extends('website.layout')
 
 @section('content')
+<div class="untree_co-section product-section before-footer-section mt-5">
+
     <div class="container mt-5">
         <h2>Histori Pemesanan</h2>
         <table class="table">
@@ -36,4 +38,5 @@
             </tbody>
         </table>
     </div>
+</div>
 @endsection

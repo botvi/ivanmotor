@@ -1,7 +1,18 @@
 @extends('template.layout')
 @section('content')
-    <!-- ... (kode lainnya) ... -->
-    <div class="w-full pb-10 pt-2">
+<div class="btn-group">
+    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Lihat Berdasarkan Status
+    </a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Sudah Di antar']) }}">Sudah Di antar</a>
+        <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Di ambil']) }}">Di ambil</a>
+        <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Di bayar']) }}">Di bayar</a>
+    </div>
+</div>
+
+
+<div class="w-full pb-10 pt-2 mt-4">
         <table class="display responsive nowrap" id="tables" style="width:100%">
             <thead class="bg-gray-100 text-gray-500 shadow-md">
                 <tr>
@@ -37,7 +48,7 @@
     @foreach ($pemesanan as $userId => $pemesananUser)
         <div aria-hidden="true" aria-labelledby="modal{{ $userId }}Label" class="modal fade"
             id="modal{{ $userId }}" role="dialog" tabindex="-1">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modal{{ $userId }}Label">Rincian Pemesanan</h5>
@@ -73,8 +84,8 @@
 
                         <!-- Form untuk mengubah status -->
                         @foreach ($pemesananUser as $pemesananItem)
-                        @if (in_array($pemesananItem->status, ['Pending', 'Proses','Ditolak','Di antar','Di ambil']))
-                        @php
+                            @if (in_array($pemesananItem->status, ['Pending', 'Proses', 'Ditolak', 'Sudah Di antar', 'Di ambil']))
+                                @php
                                     $totalHargaDikurangiDiskon = $pemesananItem->harga_total - ($pemesananItem->harga_total * ($pemesananItem->diskon ?? 0)) / 100;
                                 @endphp
                                 <div class="card">
@@ -119,8 +130,8 @@
                                             <option {{ $pemesananItem->status == 'Di ambil' ? 'selected' : '' }}
                                                 value="Di ambil">Di ambil
                                             </option>
-                                            <option {{ $pemesananItem->status == 'Di antar' ? 'selected' : '' }}
-                                                value="Di antar">Di antar
+                                            <option {{ $pemesananItem->status == 'Sudah Di antar' ? 'selected' : '' }}
+                                                value="Sudah Di antar">Sudah Di antar
                                             </option>
                                             <option {{ $pemesananItem->status == 'Di bayar' ? 'selected' : '' }}
                                                 value="Di bayar">Di bayar
@@ -131,7 +142,12 @@
                                         <label for="keterangan{{ $pemesananItem->id }}">Keterangan:</label>
                                         <textarea class="form-control" id="keterangan{{ $pemesananItem->id }}" name="keterangan" rows="3">{{ $pemesananItem->keterangan }}</textarea>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="bukti{{ $pemesananItem->id }}">Bukti Pembayaran:</label>
+                                        <input type="file" class="form-control" id="bukti{{ $pemesananItem->id }}"
+                                            name="bukti">
 
+                                    </div>
                                     <button class="btn btn-success btn-sm ml-1 w-[100px] mb-5"
                                         data-pemesanan-id="{{ $pemesananItem->id }}" id="simpanstatus">Simpan</button>
                                 </form>
@@ -160,14 +176,18 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($pemesananUser as $pemesananItem)
-                                            @if ($pemesananItem->status == 'Di antar' || $pemesananItem->status == 'Di ambil' || $pemesananItem->status == 'Ditolak' || $pemesananItem->status == 'Di bayar')
+                                            @if (
+                                                $pemesananItem->status == 'Sudah Di antar' ||
+                                                    $pemesananItem->status == 'Di ambil' ||
+                                                    $pemesananItem->status == 'Ditolak' ||
+                                                    $pemesananItem->status == 'Di bayar')
                                                 <tr>
                                                     <td>{{ $pemesananItem->barang->nama_barang }}</td>
                                                     <td>{{ $pemesananItem->quantity }}</td>
                                                     <td>{{ $pemesananItem->harga_total }}</td>
                                                     <td>
-                                                        @if ($pemesananItem->status == 'Di antar')
-                                                            <span class="badge badge-warning">Di antar</span>
+                                                        @if ($pemesananItem->status == 'Sudah Di antar')
+                                                            <span class="badge badge-warning">Sudah Di antar</span>
                                                         @elseif ($pemesananItem->status == 'Di ambil')
                                                             <span class="badge badge-warning">Di ambil</span>
                                                         @elseif ($pemesananItem->status == 'Ditolak')
@@ -325,4 +345,48 @@
             @endforeach
         @endforeach
     </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @foreach ($pemesanan as $userId => $pemesananUser)
+                @foreach ($pemesananUser as $pemesananItem)
+                    // Fungsi untuk menangani perubahan status
+                    function handleStatusChange{{ $pemesananItem->id }}() {
+                        var statusValue = document.getElementById('status{{ $pemesananItem->id }}').value;
+                        var buktiInput = document.getElementById('bukti{{ $pemesananItem->id }}');
+
+                        if (statusValue === 'Di bayar') {
+                            buktiInput.style.display = 'block';
+                        } else {
+                            buktiInput.style.display = 'none';
+                        }
+                    }
+
+                    // Panggil fungsi saat status berubah
+                    document.getElementById('status{{ $pemesananItem->id }}').addEventListener('change',
+                function() {
+                        handleStatusChange{{ $pemesananItem->id }}();
+                    });
+
+                    // Panggil fungsi untuk menetapkan status awal
+                    handleStatusChange{{ $pemesananItem->id }}();
+                @endforeach
+            @endforeach
+        });
+    </script>
+@section('style')
+<!-- ... (kode lainnya) ... -->
+<style>
+    .modal-dialog-scrollable {
+        display: flex;
+        max-height: calc(100% - 1rem);
+    }
+
+    .modal-body {
+        overflow-y: auto;
+    }
+</style>
+@endsection
+
 @endsection

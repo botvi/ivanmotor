@@ -3,6 +3,8 @@
 @extends('website.layout')
 
 @section('content')
+<div class="untree_co-section product-section before-footer-section mt-5">
+
     <div class="container mt-5">
         <h2>Isi Keranjang</h2>
         <table class="table">
@@ -54,8 +56,14 @@
                 @endforelse
             </tbody>
         </table>
+        <div class="mt-3">
+            <h4>Keterangan Pembayaran</h4>
+            <p>Silahkan langsung ke toko atau hubungi nomor admin untuk proses pembayaran.</p>
+        </div>
+        <a href="https://wa.me/6282283697935" class="btn btn-success" target="_blank">Hubungi Admin melalui WhatsApp</a>
         <a class="btn btn-primary" href="{{ route('checkout') }}">Checkout</a>
     </div>
+</div>
 @endsection
 
 @section('script')

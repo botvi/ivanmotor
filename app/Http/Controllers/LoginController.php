@@ -20,8 +20,10 @@ class logincontroller extends Controller
     
             if($role == 'customer') {
                 return redirect('/');
-            } elseif($role == 'admin') {
-                return redirect('/home'); 
+            } elseif ($role == 'seller') {
+                return redirect('/home');
+            } elseif ($role == 'admin') {
+                return redirect('/home');
             }
         }
         return redirect('/');

@@ -30,11 +30,12 @@
 <body>
 
     <!-- Start Header/Navigation -->
-    <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
-
+    <nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark fixed-top mb-5" arial-label="Furni navigation bar">
         <div class="container">
-            <a class="navbar-brand" href="index.html">IVAN MOTOR<span>.</span></a>
-
+            <div class="d-flex flex-column">
+                <a class="navbar-brand" href="index.html">IVAN MOTOR<span>.</span></a>
+                <p class="brand-subtext text-light" style="font-size: 10px;">Menyediakan Suku Cadang Motor yang berkualitas dan original.</p>
+            </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
                 aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

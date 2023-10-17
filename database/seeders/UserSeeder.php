@@ -22,5 +22,12 @@ class UserSeeder extends Seeder
             "alamat" => "Taluk kuantan, Pekanbaru, Riau",
             "role" => "admin"
         ]);
+        User::create([
+            "nama" => "seller",
+            "username" => "seller",
+            "password" => bcrypt('password'),
+            "alamat" => "Taluk kuantan, Pekanbaru, Riau",
+            "role" => "seller"
+        ]);
     }
 }

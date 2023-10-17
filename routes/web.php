@@ -150,3 +150,6 @@ Route::get('/laporan/barang', [LaporanController::class, 'laporanBarang']);
 Route::get('/laporan/penjualan', 'App\Http\Controllers\LaporanController@laporanPenjualan')->name('laporan.penjualan');
 
 Route::get('/laporan/print', 'App\Http\Controllers\LaporanController@print')->name('laporan.print');
+
+
+Route::get('/page/{status}',  'App\Http\Controllers\PemesananOnlineController@viewByStatus')->name('page.status');
