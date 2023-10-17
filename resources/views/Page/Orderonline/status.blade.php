@@ -1,6 +1,16 @@
 @extends('template.layout')
 
 @section('content')
+<div class="btn-group mb-5">
+    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Lihat Berdasarkan Status
+    </a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Sudah Di antar']) }}">Sudah Di antar</a>
+        <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Di ambil']) }}">Di ambil</a>
+        <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Di bayar']) }}">Di bayar</a>
+    </div>
+</div>
     @foreach ($pemesanan as $item)
         <h1>Data Pemesanan Online - Status: {{ $item->status }}</h1>
     @endforeach
