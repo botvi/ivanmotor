@@ -4,18 +4,19 @@
 
     <h1>Laporan Penjualan</h1>
 
-    {{-- <form action="{{ route('laporan.penjualan') }}" method="GET">
-        <label for="tanggal_awal">Tanggal Awal</label>
-        <input type="date" name="tanggal_awal" id="tanggal_awal">
-        <button type="submit" class="btn btn-primary">Cari</button>
-    </form> --}}
-    
-    <form action="{{ route('laporan.penjualan') }}" method="GET">
-        <label for="tanggal_awal">Tanggal Awal </label>
-        <input type="date" name="tanggal_awal" id="tanggal_awal">
-        <button type="submit" class="btn btn-warning">Cari</button>
-        <a href="{{ route('laporan.print', ['tanggal_awal' => request('tanggal_awal')]) }}" class="btn btn-success">Print</a>
-    </form>
+<!-- Form untuk memasukkan tanggal awal dan akhir -->
+<form action="{{ route('laporan.penjualan') }}" method="get">
+    <div class="form-group">
+        <label for="tanggal_awal">Tanggal Awal:</label>
+        <input type="date" class="form-control" id="tanggal_awal" name="tanggal_awal" required>
+    </div>
+    <div class="form-group">
+        <label for="tanggal_akhir">Tanggal Akhir:</label>
+        <input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Cari</button>
+    <a href="{{ route('laporan.print', ['tanggal_awal' => request('tanggal_awal')]) }}" class="btn btn-success">Print</a>
+</form>
 
 
     <div class="w-full pb-10 pt-2">

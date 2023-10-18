@@ -61,9 +61,9 @@
         <tbody>
             <tr>
                 <td>
-                    <h4>...<br />
-                        KECAMATAN ..<br />
-                        ...</h4>
+                    <h4>
+                        LAPORAN DATA PEMASOK<br />
+                        IVAN MOTOR</h4>
 
                     <p style="margin-left:0px; margin-right:0px">Alamat : Taluk Kuantan, Kode Pos : 29295, No. Telp :
                         6692232</p>

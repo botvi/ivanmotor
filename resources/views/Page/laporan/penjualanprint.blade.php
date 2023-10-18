@@ -61,9 +61,9 @@
         <tbody>
             <tr>
                 <td>
-                    <h4>...<br />
-                        KECAMATAN ..<br />
-                        ...</h4>
+                    <h4>
+                        LAPORAN DATA PENJUALAN<br />
+                        IVAN MOTOR</h4>
 
                     <p style="margin-left:0px; margin-right:0px">Alamat : Taluk Kuantan, Kode Pos : 29295, No. Telp :
                         6692232</p>
@@ -107,6 +107,14 @@
             @endforeach
         </tbody>
     </table>
+    <div style="margin-top: 30px; text-align: right;">
+        <p>Kuantan Singingi,</p>
+        <p>{{ date('d F Y') }}</p>
+<br>
+<br>
+        <p>_________________</p>
+        <p>Pimpinan Ivan Motor</p>
+    </div>
     <script>
         window.print();
     </script>

@@ -50,43 +50,30 @@
                         <span class="pcoded-mtext">Pemesanan</span>
                     </a>
                 </li> --}}
-                    <li class="nav-item">
-                        <a class="nav-link " href="/pemesananonline">
-                            <i class="fa fa-folder"></i>
-                            <span class="pcoded-mtext">Pemesanan Online</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item pcoded-hasmenu">
-                        <a href="javascript:void(0)" class="nav-link ">
-                            <i class="fa fa-folder"></i>
-                            <span class="pcoded-mtext">Laporan</span>
-                        </a>
-                        <ul class="pcoded-submenu">
-                            <li class="nav-item">
-                                <a href="/laporan/pemasok" class="nav-link">
-                                    <span class="pcoded-mtext">Pemasok</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                        <ul class="pcoded-submenu">
-                            <li class="nav-item">
-                                <a href="/laporan/barang" class="nav-link">
-                                    <span class="pcoded-mtext">Barang</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                        <ul class="pcoded-submenu">
-                            <li class="nav-item">
-                                <a href="/laporan/penjualan" class="nav-link">
-                                    <span class="pcoded-mtext">Data Penjualan</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
+                <li class="nav-item pcoded-hasmenu">
+                    <a href="javascript:void(0)" class="nav-link ">
+                        <i class="fa fa-folder"></i>
+                        <span class="pcoded-mtext">Laporan</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li class="nav-item">
+                            <a href="/laporan/pemasok" class="nav-link">
+                                <span class="pcoded-mtext">Pemasok</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/laporan/barang" class="nav-link">
+                                <span class="pcoded-mtext">Barang</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/laporan/penjualan" class="nav-link">
+                                <span class="pcoded-mtext">Data Penjualan</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
                 @elseif (auth()->user()->role == 'seller')
                     <li class="nav-item">
                         <a class="nav-link " href="/pemesananonline">
