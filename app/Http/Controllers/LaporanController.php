@@ -27,21 +27,21 @@ class LaporanController extends Controller
     {
         $tanggalAwal = $request->input('tanggal_awal');
         $tanggalAkhir = $request->input('tanggal_akhir'); // Menambahkan ini
-    
+
         $penjualan = PemesananOnline::whereBetween('pemesanan_online.updated_at', [$tanggalAwal, $tanggalAkhir])
             ->join('barang', 'pemesanan_online.barang_id', '=', 'barang.id')
             ->join('users', 'pemesanan_online.user_id', '=', 'users.id')
             ->select('barang.*', 'users.nama as nama', 'pemesanan_online.*')
             ->get();
-    
+
         return view('Page.laporan.penjualan', compact('penjualan'));
     }
-    
+
     public function print(Request $request)
     {
         $tanggalAwal = $request->input('tanggal_awal');
-        $tanggalAkhir = $request->input('tanggal_akhir'); 
-        $tanggalAkhir = Carbon::now();
+        $tanggalAkhir = $request->input('tanggal_akhir');
+        // $tanggalAkhir = Carbon::now();
 
         $penjualan = PemesananOnline::whereBetween('pemesanan_online.updated_at', [$tanggalAwal, $tanggalAkhir])
             ->join('barang', 'pemesanan_online.barang_id', '=', 'barang.id')
@@ -49,7 +49,7 @@ class LaporanController extends Controller
             ->select('barang.*', 'users.nama AS nama', 'pemesanan_online.*')
             ->get();
 
-        return view('Page.laporan.penjualanprint', compact('penjualan'));
+        return view('Page.laporan.penjualanprint', compact('penjualan', 'tanggalAwal', 'tanggalAkhir'));
     }
 
 

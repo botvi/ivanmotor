@@ -66,9 +66,11 @@
                         IVAN MOTOR</h4>
 
                     <p style="margin-left:0px; margin-right:0px">Alamat : Taluk Kuantan, Kode Pos : 29295, No. Telp :
-                        6692232</p>
-                </td>
+                        6692232</p><br>
+                        <p style="margin-left:0px; margin-right:0px">Laporan dari tanggal {{ \Carbon\Carbon::parse($tanggalAwal)->isoFormat('D MMMM YYYY') }} s/d {{ \Carbon\Carbon::parse($tanggalAkhir)->isoFormat('D MMMM YYYY') }} </p>
+                    </td>
             </tr>
+
         </tbody>
     </table>
 

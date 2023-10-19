@@ -15,7 +15,7 @@
         <input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir" required>
     </div>
     <button type="submit" class="btn btn-primary">Cari</button>
-    <a href="{{ route('laporan.print', ['tanggal_awal' => request('tanggal_awal')]) }}" class="btn btn-success">Print</a>
+    <a href="{{ route('laporan.print', ['tanggal_awal' => request('tanggal_awal'), 'tanggal_akhir' => request('tanggal_akhir')]) }}" class="btn btn-success">Print</a>
 </form>
 
 
