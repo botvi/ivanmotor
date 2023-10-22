@@ -3,67 +3,98 @@
 @extends('website.layout')
 
 @section('content')
-<div class="untree_co-section product-section before-footer-section mt-5">
+    <div class="untree_co-section product-section before-footer-section mt-5">
 
-    <div class="container mt-5">
-        <h2>Isi Keranjang</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Nama Barang</th>
-                    <th>Harga</th>
-                    <th>Quantity</th>
-                    <th>Total Harga</th>
-                    <th>Diskon</th>
-                    <th>Aksi</th> <!-- Tambah kolom untuk aksi -->
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($keranjang as $item)
-                    @php
-                        $totalDiskon = 0;
-                        if (!empty($item->barang->diskon)) {
-                            $totalDiskon = $item->harga_total - ($item->barang->harga_beli * $item->barang->diskon) / 100;
-                        }
-                    @endphp
+        <div class="container mt-5">
+            <h2>Isi Keranjang</h2>
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ $item->barang->nama_barang }}</td>
-                        <td>Rp {{ $item->barang->harga_beli }}</td>
-                        <td>
-                            <input class="form-control quantity-input" data-harga-beli="{{ $item->barang->harga_beli }}"
-                                data-id="{{ $item->id }}" data-stok="{{ $item->barang->stok_barang }}" min="1"
-                                type="number" value="{{ $item->quantity }}">
-                        </td>
-                        <td id="total-harga-{{ $item->id }}">Rp {{ $item->harga_total }}</td>
-                        <td id="total-diskon-{{ $item->id }}">Rp {{ $totalDiskon }} ({{ $item->diskon }}%)</td>
-                        <td>
-                            <button class="btn btn-primary perbarui-keranjang" data-id="{{ $item->id }}">Perbarui
-                                Keranjang</button>
-                            <button class="btn btn-danger hapus-keranjang" data-id="{{ $item->id }}"><svg
-                                    class="bi bi-trash" fill="currentColor" height="16" viewBox="0 0 16 16"
-                                    width="16" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                                    <path
-                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-                                </svg></button>
-                        </td>
+                        <th>Nama Barang</th>
+                        <th>Harga</th>
+                        <th>Quantity</th>
+                        <th>Total Harga</th>
+                        <th>Diskon</th>
+                        <th>Aksi</th> <!-- Tambah kolom untuk aksi -->
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="5">Keranjang Anda kosong.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-        <div class="mt-3">
-            <h4>Keterangan Pembayaran</h4>
-            <p>Silahkan langsung ke toko atau hubungi nomor admin untuk proses pembayaran.</p>
+                </thead>
+                <tbody>
+                    @forelse($keranjang as $item)
+                        @php
+                            $totalDiskon = 0;
+                            if (!empty($item->barang->diskon)) {
+                                $totalDiskon = $item->harga_total - ($item->barang->harga_beli * $item->barang->diskon) / 100;
+                            }
+                        @endphp
+                        <tr>
+                            <td>{{ $item->barang->nama_barang }}</td>
+                            <td>Rp {{ $item->barang->harga_beli }}</td>
+                            <td>
+                                <input class="form-control quantity-input" data-harga-beli="{{ $item->barang->harga_beli }}"
+                                    data-id="{{ $item->id }}" data-stok="{{ $item->barang->stok_barang }}" min="1"
+                                    type="number" value="{{ $item->quantity }}">
+                            </td>
+                            <td id="total-harga-{{ $item->id }}">Rp {{ $item->harga_total }}</td>
+                            <td id="total-diskon-{{ $item->id }}">Rp {{ $totalDiskon }} ({{ $item->diskon }}%)</td>
+                            <td>
+                                <button class="btn btn-primary perbarui-keranjang" data-id="{{ $item->id }}">Perbarui
+                                    Keranjang</button>
+                                <button class="btn btn-danger hapus-keranjang" data-id="{{ $item->id }}"><svg
+                                        class="bi bi-trash" fill="currentColor" height="16" viewBox="0 0 16 16"
+                                        width="16" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                        <path
+                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                                    </svg></button>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5">Keranjang Anda kosong.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+
+            <form action="{{ route('checkout') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                
+                <div class="form-group">
+                    <label for="metode_pembayaran">Metode Pembayaran:</label>
+                    <select class="form-control" id="metode_pembayaran" name="metode_pembayaran">
+                        <option value="cash">Cash</option>
+                        <option value="transfer">Transfer</option>
+                    </select>
+                </div>
+                
+                <!-- Tampilkan total harga -->
+                @php
+                    $totalHarga = 0;
+                    foreach($keranjang as $item) {
+                        $totalHarga += $item->harga_total;
+                    }
+                @endphp
+                <div class="form-group">
+                    <label for="total_harga">Total Harga:</label>
+                    <input type="text" class="form-control" id="total_harga" value="{{ $totalHarga }}" readonly>
+                </div>
+                <div class="form-group"  id="tujuanPembayaran" style="display:none;">
+                    <label for="total_harga">Tujuan Transfer:</label>
+                    <input type="text" class="form-control" id="total_harga" value="BRI 0928127121737 A/N KASMADI" readonly>
+                </div>
+                
+                <div class="form-group" id="buktiPembayaran" style="display:none;">
+                    <label for="bukti_transfer">Bukti Pembayaran:</label>
+                    <input type="file" class="form-control" id="bukti_transfer" name="bukti_transfer">
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Checkout</button>
+            </form>
+            
         </div>
-        <a href="https://wa.me/6282283697935" class="btn btn-success" target="_blank">Hubungi Admin melalui WhatsApp</a>
-        <a class="btn btn-primary" href="{{ route('checkout') }}">Checkout</a>
     </div>
-</div>
 @endsection
 
 @section('script')
@@ -194,6 +225,23 @@
                     });
                 });
             });
+        });
+    </script>
+    <script>
+        document.getElementById('metode_pembayaran').addEventListener('change', function() {
+            var buktiPembayaran = document.getElementById('buktiPembayaran');
+            var tujuanTransfer = document.getElementById('tujuanTransfer');
+            var hargaTotal = document.getElementById('hargaTotal');
+    
+            if (this.value === 'transfer') {
+                buktiPembayaran.style.display = 'block';
+                tujuanPembayaran.style.display = 'block';
+                hargaTotal.style.display = 'block';
+            } else {
+                buktiPembayaran.style.display = 'none';
+                tujuanPembayaran.style.display = 'none';
+                hargaTotal.style.display = 'none';
+            }
         });
     </script>
 @endsection

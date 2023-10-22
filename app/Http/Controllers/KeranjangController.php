@@ -133,34 +133,46 @@ class KeranjangController extends Controller
         }
     }
 
-    public function checkout()
+    public function checkout(Request $request)
     {
         try {
             // Ambil data keranjang berdasarkan user yang login
             $user = auth()->user();
             $keranjang = Keranjang::where('user_id', $user->id)->get();
-
+    
             if ($keranjang->isEmpty()) {
                 return redirect()->route('keranjang')->with('error', 'Keranjang Anda kosong. Tidak dapat melakukan checkout.');
             }
-
+    
             // Simpan data keranjang ke tabel pemesanan_online
             foreach ($keranjang as $item) {
-                PemesananOnline::create([
+                $pemesanan = PemesananOnline::create([
                     'user_id' => $item->user_id,
                     'barang_id' => $item->barang_id,
                     'quantity' => $item->quantity,
                     'harga_total' => $item->harga_total,
-                    'diskon' => $item->diskon
+                    'diskon' => $item->diskon,
+                    'metode_pembayaran' => $request->metode_pembayaran,
                 ]);
+    
+                // Periksa apakah ada file yang diunggah
+                if ($request->hasFile('bukti_transfer')) {
+                    $imagePath = $request->file('bukti_transfer')->store('uploads', 'public');
+                    $pemesanan->bukti_transfer = $imagePath;
+                    $pemesanan->save();
+                }
             }
-
+    
             // Hapus data keranjang
             $keranjang->each->delete();
-
+    
             return redirect()->route('history')->with('success', 'Pesanan Anda telah berhasil ditempatkan.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat melakukan checkout.');
         }
     }
+    
+    
+
+    
 }

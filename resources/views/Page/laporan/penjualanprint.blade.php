@@ -59,14 +59,34 @@
     <table class="table table-borderless text-center"
         style="border-width:0px!important; border:none; text-align:center; width:100%">
         <tbody>
+            
+            <tr>
+                <td>
+                    <h4>
+                        BENGKEL IVAN MOTOR<br />
+                    </h4>
+
+                    <p style="margin-left:0px; margin-right:0px">Talontam, Kec. Benai, Kabupaten Kuantan Singingi, Riau 29553</p>
+                        <p>Hp 0822-8389-7935</p>
+
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+    <div
+    style="background:#000000; cursor:text; height:4px; margin-bottom:0px; margin-left:0px; margin-right:0px; margin-top:0px; width:100%">
+    &nbsp;</div>
+
+<div style="background:#000000; cursor:text; height:2px; margin-top:2px; width:100%">&nbsp;</div>
+    <table class="table table-borderless text-center"
+    style="border-width:0px!important; border:none; text-align:center; width:100%">
+    <tbody>
             <tr>
                 <td>
                     <h4>
                         LAPORAN DATA PENJUALAN<br />
-                        IVAN MOTOR</h4>
+                    </h4>
 
-                    <p style="margin-left:0px; margin-right:0px">Alamat : Taluk Kuantan, Kode Pos : 29295, No. Telp :
-                        6692232</p><br>
                         <p style="margin-left:0px; margin-right:0px">Laporan dari tanggal {{ \Carbon\Carbon::parse($tanggalAwal)->isoFormat('D MMMM YYYY') }} s/d {{ \Carbon\Carbon::parse($tanggalAkhir)->isoFormat('D MMMM YYYY') }} </p>
                     </td>
             </tr>
@@ -78,7 +98,7 @@
         style="background:#000000; cursor:text; height:4px; margin-bottom:0px; margin-left:0px; margin-right:0px; margin-top:0px; width:100%">
         &nbsp;</div>
 
-    <div style="background:#000000; cursor:text; height:2px; margin-top:2px; width:100%">&nbsp;</div>
+
 
     <table id="table">
         <thead>
@@ -112,10 +132,12 @@
     <div style="margin-top: 30px; text-align: right;">
         <p>Kuantan Singingi,</p>
         <p>{{ date('d F Y') }}</p>
+        <p>Pimpinan</p>
+
 <br>
 <br>
         <p>_________________</p>
-        <p>Pimpinan Ivan Motor</p>
+        <p class="text-center">Kasmadi</p>
     </div>
     <script>
         window.print();

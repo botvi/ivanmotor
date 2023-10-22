@@ -44,8 +44,8 @@ public function updateStatus(Request $request, $id) {
     $keterangan = $request->input('keterangan');
     
     // Handle file upload
-    if ($request->hasFile('bukti')) {
-        $file = $request->file('bukti');
+    if ($request->hasFile('bukti_pengiriman')) {
+        $file = $request->file('bukti_pengiriman');
         $fileName = time() . '_' . $file->getClientOriginalName();
         $file->move(public_path('uploads'), $fileName);
     }
@@ -61,7 +61,7 @@ public function updateStatus(Request $request, $id) {
     $pemesanan->keterangan = $keterangan; 
 
     if (isset($fileName)) {
-        $pemesanan->bukti = $fileName;
+        $pemesanan->bukti_pengiriman = $fileName;
     }
 
     $pemesanan->save();

@@ -10,7 +10,7 @@ class PemesananOnline extends Model
     use HasFactory;
 
     protected $table = 'pemesanan_online';
-    protected $fillable = ['user_id', 'barang_id', 'quantity', 'diskon', 'harga_total', 'status', 'keterangan', 'deliver','bukti',
+    protected $fillable = ['user_id', 'barang_id', 'quantity', 'diskon', 'harga_total', 'status', 'keterangan', 'deliver','bukti_pengiriman','metode_pembayaran','bukti_transfer'
 ];
 
     public function user()

@@ -5,9 +5,10 @@
         Lihat Berdasarkan Status
     </a>
     <div class="dropdown-menu">
-        <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Sudah Di antar']) }}">Sudah Di antar</a>
+        <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Sedang Di antar']) }}">Sedang Di antar</a>
         <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Di ambil']) }}">Di ambil</a>
         <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Di bayar']) }}">Di bayar</a>
+        <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Selesai']) }}">Selesai</a>
     </div>
 </div>
 
@@ -63,7 +64,7 @@
 
                         {{-- Hitung total harga pending --}}
                         @foreach ($pemesananUser as $pemesananItem)
-                            @if ($pemesananItem->status == 'Pending')
+                            @if ($pemesananItem->metode_pembayaran == 'cash')
                                 @php
                                     $totalHargaPending += $pemesananItem->harga_total;
                                 @endphp
@@ -74,7 +75,7 @@
                         <table class="table table-bordered table-responsive ">
                             <thead>
                                 <tr>
-                                    <th class="bg-primary" scope="col">TOTAL HARGA YANG HARUS DI BAYAR</th>
+                                    <th class="bg-primary" scope="col">TOTAL CASH YANG HARUS DI BAYAR</th>
                                     <th class="bg-primary" scope="col">IDR {{ $totalHargaPending }}</th>
                                 </tr>
                             </thead>
@@ -84,7 +85,7 @@
 
                         <!-- Form untuk mengubah status -->
                         @foreach ($pemesananUser as $pemesananItem)
-                            @if (in_array($pemesananItem->status, ['Pending', 'Proses', 'Ditolak', 'Sudah Di antar', 'Di ambil']))
+                            @if (in_array($pemesananItem->status, ['Pending', 'Proses', 'Ditolak', 'Sedang Di antar', 'Di ambil']))
                                 @php
                                     $totalHargaDikurangiDiskon = $pemesananItem->harga_total - ($pemesananItem->harga_total * ($pemesananItem->diskon ?? 0)) / 100;
                                 @endphp
@@ -97,6 +98,8 @@
                                                     <th scope="col">Quantity</th>
                                                     <th scope="col">Diskon</th>
                                                     <th scope="col">Harga Total</th>
+                                                    <th scope="col">Metode Pembayaran</th>
+                                                    <th scope="col">Bukti Transfer</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -104,7 +107,18 @@
                                                     <td>{{ $pemesananItem->barang->nama_barang }}</td>
                                                     <td>{{ $pemesananItem->quantity }}</td>
                                                     <td>{{ $pemesananItem->diskon }}%</td>
-                                                    <td>{{ $totalHargaDikurangiDiskon }}</td>
+                                                    <td>{{ $totalHargaDikurangiDiskon }}</td> 
+                                                    <td>{{ $pemesananItem->metode_pembayaran }}</td>
+                                                    {{-- <td>{{ $pemesananItem->bukti_transfer }}</td> --}}
+                                                    <td>
+                                                        @if($pemesananItem->bukti_transfer)
+                                                            <a href="{{ asset('storage/' . $pemesananItem->bukti_transfer) }}" target="_blank" class="btn btn-success float-left">Lihat</a>
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
+
+
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -130,11 +144,14 @@
                                             <option {{ $pemesananItem->status == 'Di ambil' ? 'selected' : '' }}
                                                 value="Di ambil">Di ambil
                                             </option>
-                                            <option {{ $pemesananItem->status == 'Sudah Di antar' ? 'selected' : '' }}
-                                                value="Sudah Di antar">Sudah Di antar
+                                            <option {{ $pemesananItem->status == 'Sedang Di antar' ? 'selected' : '' }}
+                                                value="Sedang Di antar">Sedang Di antar
                                             </option>
                                             <option {{ $pemesananItem->status == 'Di bayar' ? 'selected' : '' }}
                                                 value="Di bayar">Di bayar
+                                            </option>
+                                            <option {{ $pemesananItem->status == 'Selesai' ? 'selected' : '' }}
+                                                value="Selesai">Selesai
                                             </option>
                                         </select>
                                     </div>
@@ -143,9 +160,9 @@
                                         <textarea class="form-control" id="keterangan{{ $pemesananItem->id }}" name="keterangan" rows="3">{{ $pemesananItem->keterangan }}</textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="bukti{{ $pemesananItem->id }}">Bukti Pembayaran:</label>
-                                        <input type="file" class="form-control" id="bukti{{ $pemesananItem->id }}"
-                                            name="bukti">
+                                        <label for="bukti_pengiriman{{ $pemesananItem->id }}">Bukti Pengiriman:</label>
+                                        <input type="file" class="form-control" id="bukti_pengiriman{{ $pemesananItem->id }}"
+                                            name="bukti_pengiriman">
 
                                     </div>
                                     <button class="btn btn-success btn-sm ml-1 w-[100px] mb-5"
@@ -177,23 +194,26 @@
                                     <tbody>
                                         @foreach ($pemesananUser as $pemesananItem)
                                             @if (
-                                                $pemesananItem->status == 'Sudah Di antar' ||
+                                                $pemesananItem->status == 'Sedang Di antar' ||
                                                     $pemesananItem->status == 'Di ambil' ||
                                                     $pemesananItem->status == 'Ditolak' ||
-                                                    $pemesananItem->status == 'Di bayar')
+                                                    $pemesananItem->status == 'Di bayar'||
+                                                    $pemesananItem->status == 'Selesai' )
                                                 <tr>
                                                     <td>{{ $pemesananItem->barang->nama_barang }}</td>
                                                     <td>{{ $pemesananItem->quantity }}</td>
                                                     <td>{{ $pemesananItem->harga_total }}</td>
                                                     <td>
-                                                        @if ($pemesananItem->status == 'Sudah Di antar')
-                                                            <span class="badge badge-warning">Sudah Di antar</span>
+                                                        @if ($pemesananItem->status == 'Sedang Di antar')
+                                                            <span class="badge badge-warning">Sedang Di antar</span>
                                                         @elseif ($pemesananItem->status == 'Di ambil')
                                                             <span class="badge badge-warning">Di ambil</span>
                                                         @elseif ($pemesananItem->status == 'Ditolak')
                                                             <span class="badge badge-danger">Ditolak</span>
                                                         @elseif ($pemesananItem->status == 'Di bayar')
-                                                            <span class="badge badge-success">Di bayar</span>
+                                                            <span class="badge badge-warning">Di bayar</span>
+                                                        @elseif ($pemesananItem->status == 'Selesai')
+                                                            <span class="badge badge-success">Selesai</span>
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -211,6 +231,7 @@
         </div>
     @endforeach
 @endsection
+
 
 
 @section('script')
@@ -354,7 +375,7 @@
                     // Fungsi untuk menangani perubahan status
                     function handleStatusChange{{ $pemesananItem->id }}() {
                         var statusValue = document.getElementById('status{{ $pemesananItem->id }}').value;
-                        var buktiInput = document.getElementById('bukti{{ $pemesananItem->id }}');
+                        var buktiInput = document.getElementById('bukti_pengiriman{{ $pemesananItem->id }}');
 
                         if (statusValue === 'Di bayar') {
                             buktiInput.style.display = 'block';

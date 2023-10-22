@@ -9,11 +9,12 @@
         <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Sudah Di antar']) }}">Sudah Di antar</a>
         <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Di ambil']) }}">Di ambil</a>
         <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Di bayar']) }}">Di bayar</a>
+        <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Selesai']) }}">Di bayar</a>
     </div>
 </div>
-    @foreach ($pemesanan as $item)
-        <h1>Data Pemesanan Online - Status: {{ $item->status }}</h1>
-    @endforeach
+@if($pemesanan->isNotEmpty())
+<h1>Data Pemesanan Online - Status: {{ $pemesanan[0]->status }}</h1>
+@endif
 
     <div class="w-full pb-10 pt-2 mt-4">
         <table class="display responsive nowrap" id="example" style="width:100%">
@@ -27,6 +28,9 @@
                     <th>Diskon</th>
                     <th>Harga Total</th>
                     <th>Status</th>
+                    <th>Bukti Transfer</th>
+                    <th>Bukti Pengiriman</th>
+                
                 </tr>
             </thead>
             <tbody>
@@ -41,6 +45,24 @@
                         <td>{{ $item->Diskon }}</td>
                         <td>{{ $item->harga_total }}</td>
                         <td>{{ $item->status }}</td>
+                        @if($item->status == 'Selesai')
+                        <td>
+                            @if($item->bukti_transfer)
+                                <a href="{{  asset('storage/' . $item->bukti_transfer) }}" target="_blank" class="btn btn-primary">Lihat Bukti Pengiriman</a>
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                        <td>
+                            @if($item->bukti_pengiriman)
+                                <a href="{{ asset('uploads/' . $item->bukti_pengiriman) }}" target="_blank" class="btn btn-primary">Lihat Bukti Pengiriman</a>
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                    @else
+                        <td colspan="2">-</td>
+                    @endif
                     </tr>
                 @endforeach
             </tbody>
@@ -54,6 +76,8 @@
                     <th>Diskon</th>
                     <th>Harga Total</th>
                     <th>Status</th>
+                    <th>Bukti Transfer</th>
+                    <th>Bukti Pengiriman</th>
                 </tr>
             </tfoot>
         </table>

@@ -50,6 +50,12 @@
                         <span class="pcoded-mtext">Pemesanan</span>
                     </a>
                 </li> --}}
+                <li class="nav-item">
+                    <a class="nav-link " href="/pemesananonline">
+                        <i class="fa fa-folder"></i>
+                        <span class="pcoded-mtext">Pemesanan Online</span>
+                    </a>
+                </li>
                 <li class="nav-item pcoded-hasmenu">
                     <a href="javascript:void(0)" class="nav-link ">
                         <i class="fa fa-folder"></i>

@@ -12,9 +12,12 @@
                 <tr>
                     <th>Nama Barang</th>
                     <th>Quantity</th>
+                    <th>Diskon</th>
                     <th>Total Harga</th>
                     <th>Status</th>
                     <th>Keterangan</th>
+                    <th>Metode Pembayaran</th>
+                    <th>Bukti Transfer</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +32,16 @@
                         <td>Rp. {{ number_format($totalHargaDikurangiDiskon, 0) }}</td>
                         <td>{{ $item->status }}</td>
                         <td>{{ $item->keterangan }}</td>
-                    </tr>
+                        <td>{{ $item->metode_pembayaran }}</td>
+                        <td>
+                            @if($item->bukti_transfer)
+                                <a href="{{ asset('storage/' . $item->bukti_transfer) }}" target="_blank" class="btn btn-success float-left">Lihat</a>
+                            @else
+                                -
+                            @endif
+                        </td>
+
+                                            </tr>
                 @empty
                     <tr>
                         <td colspan="5">Pesanan Anda kosong.</td>

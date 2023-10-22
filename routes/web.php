@@ -127,6 +127,7 @@ Route::get('/history', [PemesananOnlineController::class, 'riwayatpesanan']);
 
 
 Route::get('/checkout', [KeranjangController::class, 'checkout'])->name('checkout');
+Route::post('/checkout', [KeranjangController::class, 'checkout'])->name('checkout');
 Route::get('/pemesananonline', [PemesananOnlineController::class,'index'])->name('pemesanan');
 
 Route::put('/pemesanan/{id}/terima', [PemesananOnlineController::class,'terimaPemesanan']);
@@ -153,3 +154,4 @@ Route::get('/laporan/print', 'App\Http\Controllers\LaporanController@print')->na
 
 
 Route::get('/page/{status}',  'App\Http\Controllers\PemesananOnlineController@viewByStatus')->name('page.status');
+
