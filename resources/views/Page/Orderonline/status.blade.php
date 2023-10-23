@@ -9,7 +9,7 @@
         <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Sudah Di antar']) }}">Sudah Di antar</a>
         <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Di ambil']) }}">Di ambil</a>
         <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Di bayar']) }}">Di bayar</a>
-        <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Selesai']) }}">Di bayar</a>
+        <a class="dropdown-item" href="{{ route('page.status', ['status' => 'Selesai']) }}">Selesai</a>
     </div>
 </div>
 @if($pemesanan->isNotEmpty())
@@ -48,7 +48,7 @@
                         @if($item->status == 'Selesai')
                         <td>
                             @if($item->bukti_transfer)
-                                <a href="{{  asset('storage/' . $item->bukti_transfer) }}" target="_blank" class="btn btn-primary">Lihat Bukti Pengiriman</a>
+                                <a href="{{  asset('storage/' . $item->bukti_transfer) }}" target="_blank" class="btn btn-primary">Lihat Bukti Transfer</a>
                             @else
                                 N/A
                             @endif
